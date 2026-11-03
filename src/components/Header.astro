@@ -1,0 +1,47 @@
+---
+import ThemeToggle from './ThemeToggle.astro';
+import { getDict, type Locale } from '../i18n';
+interface Props { locale: Locale; altPath: string; home: string }
+const { locale, altPath, home } = Astro.props;
+const t = getDict(locale);
+const altLocale = locale === 'ru' ? 'en' : 'ru';
+---
+<a class="skip-link" href="#main">{t.nav.skip}</a>
+<header class="site-header">
+  <div class="container bar">
+    <a class="brand" href={home}>{t.meta.name}</a>
+    <nav aria-label={t.nav.label}>
+      <ul>
+        {t.nav.items.map((i) => <li><a href={`${home}${i.href}`}>{i.label}</a></li>)}
+      </ul>
+    </nav>
+    <div class="tools">
+      <a class="icon-btn mono lang" href={altPath} hreflang={altLocale} lang={altLocale} title={t.meta.altName}>{t.meta.altLabel}</a>
+      <ThemeToggle label={t.nav.theme} />
+    </div>
+  </div>
+</header>
+<style>
+  .skip-link {
+    position: absolute; left: 1rem; top: -4rem; z-index: 100;
+    padding: .75rem 1.25rem; border-radius: 999px;
+    background: var(--accent); color: var(--accent-contrast); font-weight: 600; text-decoration: none;
+  }
+  .skip-link:focus { top: .5rem; }
+  .site-header {
+    position: sticky; top: 0; z-index: 50; height: var(--header-h);
+    background: color-mix(in srgb, var(--bg) 85%, transparent);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+  .bar { height: 100%; display: flex; align-items: center; gap: var(--space-3); }
+  .brand { font-weight: 700; font-size: 1.125rem; color: var(--text); text-decoration: none; min-height: 44px; display: inline-flex; align-items: center; }
+  nav { margin-inline: auto; }
+  nav ul { display: flex; gap: var(--space-1); list-style: none; margin: 0; padding: 0; }
+  nav a { display: inline-flex; align-items: center; min-height: 44px; padding-inline: .75rem; color: var(--text); text-decoration: none; border-radius: 999px; }
+  nav a:hover { background: var(--surface); }
+  .tools { display: flex; gap: var(--space-1); margin-left: auto; }
+  nav + .tools { margin-left: 0; }
+  .lang { color: var(--text); text-decoration: none; font-weight: 600; }
+  @media (max-width: 56rem) { nav { display: none; } .tools { margin-left: auto; } }
+</style>

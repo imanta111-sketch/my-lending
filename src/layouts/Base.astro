@@ -4,6 +4,7 @@ import '@fontsource-variable/jetbrains-mono';
 import '../styles/tokens.css';
 import '../styles/base.css';
 import { themeBootScript } from '../scripts/theme';
+import { localePath } from '../i18n';
 
 export interface Props {
   locale: 'ru' | 'en';
@@ -13,6 +14,10 @@ export interface Props {
   noindex?: boolean;
 }
 const { locale, title, description, noindex = false } = Astro.props;
+const path = Astro.url.pathname;
+const canonical = new URL(path, Astro.site);
+const ruUrl = new URL(localePath('ru', path), Astro.site);
+const enUrl = new URL(localePath('en', path), Astro.site);
 ---
 <!doctype html>
 <html lang={locale}>
@@ -23,6 +28,10 @@ const { locale, title, description, noindex = false } = Astro.props;
     <title>{title}</title>
     <meta name="description" content={description} />
     {noindex && <meta name="robots" content="noindex" />}
+    <link rel="canonical" href={canonical} />
+    <link rel="alternate" hreflang="ru" href={ruUrl} />
+    <link rel="alternate" hreflang="en" href={enUrl} />
+    <link rel="alternate" hreflang="x-default" href={ruUrl} />
   </head>
   <body>
     <slot />
