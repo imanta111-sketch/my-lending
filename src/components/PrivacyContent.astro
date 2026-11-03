@@ -1,0 +1,22 @@
+---
+import SimplePage from './SimplePage.astro';
+import { getDict, localePath, type Locale } from '../i18n';
+interface Props { locale: Locale }
+const { locale } = Astro.props;
+const t = getDict(locale).privacy;
+---
+<SimplePage locale={locale} path="/privacy" title={t.title}>
+  <h1>{t.title}</h1>
+  <p class="mono muted">{t.updated}</p>
+  {t.sections.map((s) => (
+    <section>
+      <h2 class="h">{s.h}</h2>
+      <p>{s.p}</p>
+    </section>
+  ))}
+  <a class="btn-secondary" href={localePath(locale, '/')}>{t.back}</a>
+</SimplePage>
+<style>
+  h1 { font-size: clamp(2rem, 5vw, 3.5rem); }
+  .h { font-size: 1.375rem; margin-top: var(--space-4); }
+</style>

@@ -8,6 +8,7 @@ import Process from './Process.astro';
 import HowBuilt from './HowBuilt.astro';
 import About from './About.astro';
 import Pricing from './Pricing.astro';
+import Contact from './Contact.astro';
 import { getDict, localePath, type Locale } from '../i18n';
 interface Props { locale: Locale }
 const { locale } = Astro.props;
@@ -24,9 +25,7 @@ const altPath = localePath(locale === 'ru' ? 'en' : 'ru', '/');
     <HowBuilt locale={locale} />
     <About locale={locale} />
     <Pricing locale={locale} />
-    {['contact'].map((id) => (
-      <section id={id} class="section"><div class="container"><h2>{id}</h2></div></section>
-    ))}
+    <Contact locale={locale} />
   </main>
   <Footer locale={locale} home={home} privacyPath={localePath(locale, '/privacy')} />
 </Base>

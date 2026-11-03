@@ -1,0 +1,78 @@
+---
+import { getDict, localePath, type Locale } from '../i18n';
+import { links } from '../data/contacts';
+interface Props { locale: Locale }
+const { locale } = Astro.props;
+const t = getDict(locale).contact;
+const channels = [
+  { href: links.instagramDm, label: 'Instagram' },
+  { href: links.whatsapp, label: 'WhatsApp' },
+  { href: links.telegram, label: 'Telegram' },
+  { href: links.email, label: 'Email' },
+];
+---
+<section id="contact" class="section">
+  <div class="container wrap">
+    <div>
+      <h2>{t.title}</h2>
+      <p class="lead">{t.lead}</p>
+      <p class="or">{t.or}</p>
+      <ul class="channels">
+        {channels.map((c) => (
+          <li><a class="btn-secondary" href={c.href} target={c.href.startsWith('mailto:') ? undefined : '_blank'} rel="noopener">{c.label}</a></li>
+        ))}
+      </ul>
+      <p class="subscribe">
+        {t.subscribeText} <a href={links.instagram} rel="me noopener">{t.subscribeLink}</a> {t.subscribeAfter}
+      </p>
+    </div>
+
+    <form class="form" name="contact" method="POST" action={localePath(locale, '/thanks')} data-netlify="true" netlify-honeypot="bot-field">
+      <input type="hidden" name="form-name" value="contact" />
+      <p class="bot" aria-hidden="true">
+        <label for="bot-field">{t.botLabel}</label>
+        <input id="bot-field" name="bot-field" tabindex="-1" autocomplete="off" />
+      </p>
+      <div class="field">
+        <label for="f-name">{t.name}</label>
+        <input id="f-name" name="name" required autocomplete="name" maxlength="100" />
+      </div>
+      <div class="field">
+        <label for="f-contact">{t.contact}</label>
+        <input id="f-contact" name="contact" required aria-describedby="f-contact-hint" maxlength="200" />
+        <small id="f-contact-hint" class="muted">{t.contactHint}</small>
+      </div>
+      <div class="field">
+        <label for="f-message">{t.message}</label>
+        <textarea id="f-message" name="message" required rows="4" aria-describedby="f-message-hint" maxlength="2000"></textarea>
+        <small id="f-message-hint" class="muted">{t.messageHint}</small>
+      </div>
+      <div class="consent">
+        <input id="f-consent" type="checkbox" name="consent" value="yes" required />
+        <label for="f-consent">{t.consentBefore}<a href={localePath(locale, '/privacy')}>{t.consentLink}</a></label>
+      </div>
+      <button class="btn-primary" type="submit">{t.submit}</button>
+    </form>
+  </div>
+</section>
+<style>
+  .wrap { display: grid; gap: var(--space-4); grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); align-items: start; }
+  .or { font-weight: 600; margin-top: var(--space-3); }
+  .channels { list-style: none; padding: 0; margin: 0 0 var(--space-3); display: flex; flex-wrap: wrap; gap: var(--space-1); }
+  .form { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: var(--space-3); display: grid; gap: var(--space-3); }
+  .field { display: grid; gap: .375rem; }
+  label { font-weight: 600; }
+  input, textarea {
+    font: inherit; color: var(--text); background: var(--bg);
+    border: 1px solid color-mix(in srgb, var(--text) 35%, transparent); border-radius: var(--radius-sm);
+    padding: .75rem 1rem; min-height: 48px; width: 100%;
+  }
+  textarea { resize: vertical; }
+  input:user-invalid, textarea:user-invalid { border-color: #C2362D; }
+  .consent { display: grid; grid-template-columns: auto 1fr; gap: .75rem; align-items: start; }
+  .consent input { width: 24px; height: 24px; min-height: 0; margin: .15rem 0 0; accent-color: var(--accent); }
+  .consent label { font-weight: 400; }
+  .form .btn-primary { justify-self: start; border: 0; }
+  .bot { display: none; }
+  @media (max-width: 48rem) { .wrap { grid-template-columns: 1fr; } }
+</style>

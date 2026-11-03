@@ -1,0 +1,21 @@
+---
+import Base from '../layouts/Base.astro';
+import Header from './Header.astro';
+import Footer from './Footer.astro';
+import { getDict, localePath, type Locale } from '../i18n';
+interface Props { locale: Locale; path: '/privacy' | '/thanks'; title: string; noindex?: boolean }
+const { locale, path, title, noindex = false } = Astro.props;
+const t = getDict(locale);
+const home = localePath(locale, '/');
+const altPath = localePath(locale === 'ru' ? 'en' : 'ru', path);
+---
+<Base locale={locale} title={`${title} — ${t.meta.name}`} description={t.meta.description} altPath={altPath} noindex={noindex}>
+  <Header locale={locale} altPath={altPath} home={home} />
+  <main id="main" tabindex="-1" class="container page">
+    <slot />
+  </main>
+  <Footer locale={locale} home={home} privacyPath={localePath(locale, '/privacy')} />
+</Base>
+<style>
+  .page { padding-block: var(--space-5) var(--space-6); max-width: 48rem; }
+</style>
