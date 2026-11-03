@@ -1,9 +1,10 @@
 ---
 import { getDict, localePath, type Locale } from '../i18n';
-import { links } from '../data/contacts';
+import { links, web3formsKey } from '../data/contacts';
 interface Props { locale: Locale }
 const { locale } = Astro.props;
 const t = getDict(locale).contact;
+const redirect = new URL(`${localePath(locale, '/thanks')}/`, Astro.site).href;
 const channels = [
   { href: links.instagramDm, label: 'Instagram' },
   { href: links.whatsapp, label: 'WhatsApp' },
@@ -27,11 +28,14 @@ const channels = [
       </p>
     </div>
 
-    <form class="form" name="contact" method="POST" action={localePath(locale, '/thanks')} data-netlify="true" netlify-honeypot="bot-field">
-      <input type="hidden" name="form-name" value="contact" />
+    <form class="form" name="contact" method="POST" action="https://api.web3forms.com/submit">
+      <input type="hidden" name="access_key" value={web3formsKey} />
+      <input type="hidden" name="redirect" value={redirect} />
+      <input type="hidden" name="subject" value={t.subject} />
+      <input type="hidden" name="from_name" value="Сайт-портфолио" />
       <p class="bot" aria-hidden="true">
-        <label for="bot-field">{t.botLabel}</label>
-        <input id="bot-field" name="bot-field" tabindex="-1" autocomplete="off" />
+        <label for="botcheck">{t.botLabel}</label>
+        <input id="botcheck" type="checkbox" name="botcheck" tabindex="-1" />
       </p>
       <div class="field">
         <label for="f-name">{t.name}</label>

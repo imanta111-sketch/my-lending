@@ -36,7 +36,14 @@ test.describe('JavaScript выключен (Review Focus 2)', () => {
     }
   });
 
-  test('форма отправляется без JS', async ({ page }) => {
+  test('форма отправляется без JS и ведёт на /thanks', async ({ page }) => {
+    // Не шлём настоящую заявку: подменяем Web3Forms редиректом, как делает сервис
+    await page.route('https://api.web3forms.com/submit', async (route) => {
+      const body = new URLSearchParams(route.request().postData() ?? '');
+      expect(body.get('name')).toBe('Анна');
+      const target = new URL(body.get('redirect')!);
+      await route.fulfill({ status: 303, headers: { location: `http://localhost:4321${target.pathname}` } });
+    });
     await page.goto('/');
     await page.fill('#contact input[name=name]', 'Анна');
     await page.fill('#contact input[name=contact]', '@anna');

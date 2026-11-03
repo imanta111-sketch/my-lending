@@ -117,6 +117,7 @@ export const en: Dict = {
     subscribeLink: 'Follow for tips',
     subscribeAfter: '— I break down new techniques 1–2 times a week.',
     botLabel: 'Leave this field empty',
+    subject: 'New request from the website (EN)',
   },
   privacy: {
     title: 'Privacy policy',
@@ -125,7 +126,7 @@ export const en: Dict = {
       { h: 'Who processes your data', p: 'Rita Romanovskaia, Latvia. Contact for data questions: imanta111@gmail.com.' },
       { h: 'What data', p: 'Only what you enter in the form: your name, how to reach you and a description of your task.' },
       { h: 'Why', p: 'To answer your request and discuss the project. Legal basis: your consent (Art. 6(1)(a) GDPR).' },
-      { h: 'Where it is stored', p: 'Requests are processed by Netlify (USA). Data transfers rely on the EU Standard Contractual Clauses.' },
+      { h: 'Where it is stored', p: 'Your request is forwarded by the Web3Forms service to my email (Gmail, Google). These services may process data outside the EU, including in the USA.' },
       { h: 'How long', p: '12 months from your request, then deleted.' },
       { h: 'Your rights', p: 'You can request access to, correction or deletion of your data and withdraw consent by emailing the address above. You can also lodge a complaint with the Data State Inspectorate of Latvia (DVI).' },
       { h: 'Cookies', p: 'This site uses no cookies and no third-party trackers.' },

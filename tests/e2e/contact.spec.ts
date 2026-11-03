@@ -4,12 +4,14 @@ for (const [path, privacy, promise] of [['/', '/privacy', /в течение д�
   test.describe(path, () => {
     test.beforeEach(async ({ page }) => { await page.goto(path); });
 
-    test('форма настроена для Netlify Forms', async ({ page }) => {
+    test('форма настроена для Web3Forms', async ({ page }) => {
       const form = page.locator('#contact form');
-      await expect(form).toHaveAttribute('data-netlify', 'true');
-      await expect(form).toHaveAttribute('netlify-honeypot', 'bot-field');
+      await expect(form).toHaveAttribute('action', 'https://api.web3forms.com/submit');
       await expect(form).toHaveAttribute('method', /post/i);
-      await expect(form.locator('input[type=hidden][name="form-name"]')).toHaveValue('contact');
+      await expect(form.locator('input[type=hidden][name="access_key"]')).toHaveValue('7463ee19-38db-43b6-b13d-686ec6c7d96f');
+      await expect(form.locator('input[type=hidden][name="redirect"]')).toHaveValue(new RegExp(`^https://.+${privacy.replace('privacy', 'thanks')}/$`));
+      await expect(form.locator('input[type=hidden][name="subject"]')).toHaveValue(/.+/);
+      await expect(form).not.toHaveAttribute('data-netlify', /.*/);
     });
 
     test('у полей видимые подписи, а не только placeholder', async ({ page }) => {
@@ -40,7 +42,7 @@ for (const [path, privacy, promise] of [['/', '/privacy', /в течение д�
     });
 
     test('honeypot скрыт от людей и вне табуляции', async ({ page }) => {
-      const bot = page.locator('#contact [name="bot-field"]');
+      const bot = page.locator('#contact [name="botcheck"]');
       await expect(bot).toBeHidden();
       await expect(bot).toHaveAttribute('tabindex', '-1');
     });

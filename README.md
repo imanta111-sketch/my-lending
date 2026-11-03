@@ -42,14 +42,13 @@ npm run test:lh          # Lighthouse (нужен путь к Chrome, см. ни
 CHROME_PATH="$(node -e "import('@playwright/test').then(m=>console.log(m.chromium.executablePath()))")" npm run test:lh
 ```
 
-## Публикация на Netlify
+## Публикация на Vercel
 
-1. Залейте проект на GitHub, затем на netlify.com выберите «Add new site → Import from Git».
-2. Настройки сборки подтянутся из `netlify.toml`. **Сборка не пройдёт, пока остались `XXX`**: так задумано.
-3. Адрес сайта Netlify подставит сам (переменная `URL`). Локально `check:launch` напомнит про заглушку `example.netlify.app`, это нормально.
-4. **Включите приём форм:** Netlify → Forms → **Enable form detection**, затем Deploys → **Trigger deploy**. Без этого заявки молча теряются!
-5. Сразу отправьте тестовую заявку с сайта и проверьте, что она появилась в Netlify → Forms → `contact`. Уведомления на почту: Forms → Form notifications → Email.
-6. Аналитика без cookie (по желанию): Netlify → Environment variables → `PUBLIC_ANALYTICS_SRC` и `PUBLIC_ANALYTICS_DOMAIN` (см. `.env.example`).
+1. Залейте проект на GitHub, затем на vercel.com: **Add New → Project → Import** нужного репозитория.
+2. Настройки сборки подтянутся из `vercel.json`. **Сборка не пройдёт, пока остались `XXX`**: так задумано.
+3. Адрес сайта Vercel подставит сам (переменная `VERCEL_PROJECT_PRODUCTION_URL`). Если подключите свой домен, сделайте его основным (Settings → Domains), затем Redeploy. Локально `check:launch` напомнит про заглушку `example.netlify.app`, это нормально.
+4. **Форма заявок работает через [Web3Forms](https://web3forms.com):** заявки приходят письмом на почту, к которой привязан ключ (`web3formsKey` в `src/data/contacts.ts`). После публикации отправьте тестовую заявку и проверьте почту, в том числе папку «Спам».
+5. Аналитика без cookie (по желанию): Vercel → Settings → Environment Variables → `PUBLIC_ANALYTICS_SRC` и `PUBLIC_ANALYTICS_DOMAIN` (см. `.env.example`), затем Redeploy.
 
 ## Чек-лист перед запуском (ТЗ §10–11, research 5.5)
 

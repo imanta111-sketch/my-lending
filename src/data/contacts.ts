@@ -6,6 +6,9 @@ export const contacts = {
   email: 'imanta111@gmail.com',
 };
 
+/** Ключ Web3Forms: куда пересылать заявки с формы (не секретный, web3forms.com). */
+export const web3formsKey = '7463ee19-38db-43b6-b13d-686ec6c7d96f';
+
 export const links = {
   instagram: `https://www.instagram.com/${contacts.instagram}/`,
   instagramDm: `https://ig.me/m/${contacts.instagram}`,
