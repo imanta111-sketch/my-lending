@@ -1,0 +1,22 @@
+/* ТЗ §8 «Анимации». Всё — только при разрешённом движении.
+   Без поддержки scroll-driven animations контент просто виден. */
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .reveal {
+      /* только longhand-свойства: минификатор иначе сворачивает timeline в shorthand,
+         который Chrome отбрасывает */
+      animation-name: reveal;
+      animation-timing-function: linear;
+      animation-fill-mode: both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 30%;
+    }
+  }
+
+  @view-transition { navigation: auto; }
+  ::view-transition-group(*) { animation-duration: .25s; }
+}
+
+@keyframes reveal {
+  from { opacity: 0; translate: 0 1.5rem; }
+}
