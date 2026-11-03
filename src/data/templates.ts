@@ -15,7 +15,7 @@ export type TemplateCard = {
   image: ImageMetadata;
 };
 
-/** ТЗ §6.2. Сроки, цены и ссылки на демо — заменить XXX / null. */
+/** ТЗ §6.2. Ссылки на демо — вписать вместо null, когда демо готовы. */
 export const templates: TemplateCard[] = [
   {
     id: 'cafe',
@@ -24,13 +24,13 @@ export const templates: TemplateCard[] = [
       ru: 'Меню, часы работы, карта и кнопка «Забронировать стол»',
       en: 'Menu, opening hours, map and a “Book a table” button',
     },
-    demoUrl: null, days: 'XXX', priceFrom: 'XXX', priceTo: 'XXX', image: cafe,
+    demoUrl: null, days: '3–7', priceFrom: '250', priceTo: '750', image: cafe,
   },
   {
     id: 'salon',
     niche: { ru: 'Салон красоты', en: 'Beauty salon' },
     description: { ru: 'Услуги с ценами, мастера, онлайн-запись', en: 'Services with prices, your team, online booking' },
-    demoUrl: null, days: 'XXX', priceFrom: 'XXX', priceTo: 'XXX', image: salon,
+    demoUrl: null, days: '3–7', priceFrom: '250', priceTo: '750', image: salon,
   },
   {
     id: 'coach',
@@ -39,7 +39,7 @@ export const templates: TemplateCard[] = [
       ru: 'Обо мне, программы, отзывы, запись на консультацию',
       en: 'About you, programmes, reviews, consultation booking',
     },
-    demoUrl: null, days: 'XXX', priceFrom: 'XXX', priceTo: 'XXX', image: coach,
+    demoUrl: null, days: '3–7', priceFrom: '250', priceTo: '750', image: coach,
   },
   {
     id: 'portfolio',
@@ -48,6 +48,6 @@ export const templates: TemplateCard[] = [
       ru: 'Работы, процесс, контакты — для дизайнеров, фотографов, мастеров',
       en: 'Work, process, contacts — for designers, photographers, makers',
     },
-    demoUrl: null, days: 'XXX', priceFrom: 'XXX', priceTo: 'XXX', image: portfolio,
+    demoUrl: null, days: '3–7', priceFrom: '250', priceTo: '750', image: portfolio,
   },
 ];

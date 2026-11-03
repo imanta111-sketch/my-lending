@@ -22,12 +22,12 @@ export const en: Dict = {
   },
   hero: {
     eyebrow: 'AI designer · Latvia · RU / EN',
-    title: 'A fast, ready-made website for your business — tailored in XXX days',
+    title: 'A fast, ready-made website for your business — tailored in 3–7 days',
     subtitle: 'I build modern websites together with AI: faster than a site builder, without extra costs. I break down every technique openly on my Instagram.',
     cta: 'I want a site like this',
     secondary: 'See templates ↓',
     follow: 'Follow for tips →',
-    trust: 'This site is my first case study: Lighthouse XXX/100 · no cookies · 2 languages',
+    trust: 'This site is my first case study: Lighthouse 90+/100 · no cookies · 2 languages',
     imageAlt: 'Rita Romanovskaia — portrait',
   },
   showcase: {
@@ -54,11 +54,11 @@ export const en: Dict = {
     lead: 'I learn in public. Every feature of this site is broken down in its own post.',
     link: 'Breakdown on Instagram ↗',
     items: [
-      { title: 'Scroll animations in pure CSS', text: 'No heavy libraries — sections gently appear as you reach them.', href: 'https://www.instagram.com/p/XXX/' },
-      { title: 'Smooth page transitions', text: 'Like in an app: pages flow into each other instead of flashing.', href: 'https://www.instagram.com/p/XXX/' },
-      { title: 'Dark and light theme', text: 'The site follows your phone’s settings automatically.', href: 'https://www.instagram.com/p/XXX/' },
-      { title: 'XXX/100 in Google Lighthouse', text: 'Opens fast, even on mobile data.', href: 'https://www.instagram.com/p/XXX/' },
-      { title: 'No cookie banner', text: 'Analytics that doesn’t track visitors — and no pop-ups.', href: 'https://www.instagram.com/p/XXX/' },
+      { title: 'Scroll animations in pure CSS', text: 'No heavy libraries — sections gently appear as you reach them.', href: 'https://www.instagram.com/ritaexpert50/' },
+      { title: 'Smooth page transitions', text: 'Like in an app: pages flow into each other instead of flashing.', href: 'https://www.instagram.com/ritaexpert50/' },
+      { title: 'Dark and light theme', text: 'The site follows your phone’s settings automatically.', href: 'https://www.instagram.com/ritaexpert50/' },
+      { title: '90+ out of 100 in Google Lighthouse', text: 'Opens fast, even on mobile data.', href: 'https://www.instagram.com/ritaexpert50/' },
+      { title: 'No cookie banner', text: 'Analytics that doesn’t track visitors — and no pop-ups.', href: 'https://www.instagram.com/ritaexpert50/' },
     ],
   },
   about: {
@@ -70,24 +70,24 @@ export const en: Dict = {
   pricing: {
     title: 'What it costs',
     lead: 'Honest prices, upfront. I’ll name the exact amount after a short chat about your task.',
-    banner: 'Taking on my first projects: XXX% off in exchange for an honest review and permission to show the site in my portfolio.',
+    banner: 'Taking on my first projects: 25% off in exchange for an honest review and permission to show the site in my portfolio.',
     popular: 'Most popular',
     includes: 'What’s included',
     plans: [
       {
-        name: 'Template as is', priceFrom: 'XXX', priceTo: 'XXX', popular: 'no',
+        name: 'Template as is', priceFrom: '250', priceTo: '400', popular: 'no',
         includes: ['Your texts, photos and logo', 'Your colours', 'Mobile-friendly layout', 'Domain setup'],
       },
       {
-        name: 'Tailored to your business', priceFrom: 'XXX', priceTo: 'XXX', popular: 'yes',
+        name: 'Tailored to your business', priceFrom: '450', priceTo: '750', popular: 'yes',
         includes: ['Everything in the first plan', 'Rearranged and new sections', 'Help with texts', 'Contact form and messenger buttons', 'Basic SEO', '2 rounds of changes'],
       },
       {
-        name: 'Tailored + support', priceFrom: 'XXX', priceTo: 'XXX', popular: 'no',
-        includes: ['Everything in the second plan', 'XXX months of support', 'Small edits', 'Speed and health checks'],
+        name: 'Tailored + support', priceFrom: '650', priceTo: '1000', popular: 'no',
+        includes: ['Everything in the second plan', '3 months of support', 'Small edits', 'Speed and health checks'],
       },
     ],
-    note: 'The domain is paid separately (usually €XXX per year) and registered in your name.',
+    note: 'The domain is paid separately (usually €10–20 per year) and registered in your name.',
     cta: 'I want a site like this',
     faqTitle: 'Frequently asked questions',
     faq: [
@@ -95,7 +95,7 @@ export const en: Dict = {
       { q: 'Do I need to buy a domain and hosting?', a: 'A domain — yes, I’ll help you choose and connect it. Hosting for sites like these is often free or costs a few euros a month.' },
       { q: 'How many changes can I request?', a: 'The “Tailored to your business” plan includes 2 rounds of changes. Small typos are always fixed.' },
       { q: 'Who owns the website?', a: 'You do. The domain, hosting and code are in your name, and I hand over all access after launch.' },
-      { q: 'How does payment work?', a: 'In two parts: XXX% before we start, the rest after you’ve accepted the site. I issue an official invoice.' },
+      { q: 'How does payment work?', a: 'In two parts: 50% before we start, the rest after you’ve accepted the site. I issue an official invoice.' },
       { q: 'What if I need changes later?', a: 'Just message me: small edits are quick, and there’s a support plan for regular updates.' },
       { q: 'Why is this better than Tilda?', a: 'The site loads faster, doesn’t depend on a site-builder subscription and is fully yours. The honest downside: changing complex things yourself is harder — that’s why there’s a support plan.' },
       { q: 'Do you work with clients from other countries?', a: 'Yes — online, in Russian and English.' },
