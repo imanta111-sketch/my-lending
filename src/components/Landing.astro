@@ -4,6 +4,9 @@ import Header from './Header.astro';
 import Footer from './Footer.astro';
 import Hero from './Hero.astro';
 import Showcase from './Showcase.astro';
+import Process from './Process.astro';
+import HowBuilt from './HowBuilt.astro';
+import About from './About.astro';
 import { getDict, localePath, type Locale } from '../i18n';
 interface Props { locale: Locale }
 const { locale } = Astro.props;
@@ -16,7 +19,10 @@ const altPath = localePath(locale === 'ru' ? 'en' : 'ru', '/');
   <main id="main" tabindex="-1">
     <Hero locale={locale} />
     <Showcase locale={locale} />
-    {['process', 'how-built', 'about', 'pricing', 'contact'].map((id) => (
+    <Process locale={locale} />
+    <HowBuilt locale={locale} />
+    <About locale={locale} />
+    {['pricing', 'contact'].map((id) => (
       <section id={id} class="section"><div class="container"><h2>{id}</h2></div></section>
     ))}
   </main>

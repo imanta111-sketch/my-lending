@@ -1,0 +1,29 @@
+---
+import { getDict, type Locale } from '../i18n';
+interface Props { locale: Locale }
+const t = getDict(Astro.props.locale).process;
+---
+<section id="process" class="section">
+  <div class="container">
+    <h2>{t.title}</h2>
+    <ol class="steps">
+      {t.steps.map((s, i) => (
+        <li class="step reveal">
+          <span class="num mono" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+          <h3>{s.title}</h3>
+          <p class="muted">{s.text}</p>
+        </li>
+      ))}
+    </ol>
+    <a class="btn-primary" href="#contact">{t.cta}</a>
+  </div>
+</section>
+<style>
+  .steps {
+    list-style: none; margin: var(--space-4) 0; padding: 0;
+    display: grid; gap: var(--space-3); grid-template-columns: repeat(auto-fit, minmax(min(14rem, 100%), 1fr));
+  }
+  .step { border-top: 2px solid var(--text); padding-top: var(--space-2); }
+  .step p { margin: 0; }
+  .num { display: block; color: var(--accent-text); font-size: 1rem; margin-bottom: var(--space-1); }
+</style>

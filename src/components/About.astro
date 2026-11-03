@@ -1,0 +1,27 @@
+---
+import { Image } from 'astro:assets';
+import photo from '../assets/hero.svg';
+import { getDict, type Locale } from '../i18n';
+interface Props { locale: Locale }
+const t = getDict(Astro.props.locale).about;
+---
+<section id="about" class="section">
+  <div class="container about">
+    <Image class="photo" src={photo} alt={t.imageAlt} width={560} height={640} loading="lazy" />
+    <div>
+      <h2>{t.title}</h2>
+      <p class="text">{t.text}</p>
+      <ul class="facts">
+        {t.facts.map((f) => <li class="mono">{f}</li>)}
+      </ul>
+    </div>
+  </div>
+</section>
+<style>
+  .about { display: grid; gap: var(--space-4); grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr); align-items: center; }
+  .photo { width: 100%; max-width: 24rem; border-radius: var(--radius); }
+  .text { font-size: 1.1875rem; }
+  .facts { list-style: none; padding: 0; margin: var(--space-3) 0 0; display: flex; flex-wrap: wrap; gap: var(--space-1); }
+  .facts li { padding: .375rem .875rem; border: 1px solid var(--border); border-radius: 999px; }
+  @media (max-width: 48rem) { .about { grid-template-columns: 1fr; } .photo { max-width: 16rem; } }
+</style>
