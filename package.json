@@ -7,9 +7,11 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "test:unit": "vitest run --passWithNoTests",
+    "test:unit": "vitest run",
     "test:e2e": "playwright test",
-    "test": "vitest run --passWithNoTests && playwright test"
+    "test": "vitest run && playwright test",
+    "test:lh": "lhci autorun",
+    "check:launch": "node scripts/check-placeholders.mjs"
   },
   "dependencies": {
     "@fontsource-variable/jetbrains-mono": "^5.3.0",

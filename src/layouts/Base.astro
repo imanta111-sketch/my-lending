@@ -6,6 +6,8 @@ import '../styles/base.css';
 import '../styles/motion.css';
 import { themeBootScript } from '../scripts/theme';
 import { localePath } from '../i18n';
+import onestLatin from '@fontsource-variable/onest/files/onest-latin-wght-normal.woff2?url';
+import onestCyrillic from '@fontsource-variable/onest/files/onest-cyrillic-wght-normal.woff2?url';
 
 export interface Props {
   locale: 'ru' | 'en';
@@ -26,6 +28,7 @@ const enUrl = new URL(localePath('en', path), Astro.site);
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <script is:inline set:html={themeBootScript} />
+    <link rel="preload" href={locale === 'ru' ? onestCyrillic : onestLatin} as="font" type="font/woff2" crossorigin />
     <title>{title}</title>
     <meta name="description" content={description} />
     {noindex && <meta name="robots" content="noindex" />}
