@@ -1,0 +1,52 @@
+/* Палитра A «Cloud Dancer» — ТЗ §7 */
+:root {
+  color-scheme: light;
+  --bg: #F0EEE9;
+  --surface: #FFFFFF;
+  --text: #141414;
+  --muted: #5C5A55;
+  --accent: #3B5BFF;
+  --accent-contrast: #FFFFFF;
+  --accent-text: #2F4BE0;
+  --border: color-mix(in srgb, #141414 12%, transparent);
+
+  --font-sans: 'Onest Variable', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono Variable', ui-monospace, monospace;
+  --radius: 20px;
+  --radius-sm: 12px;
+  --space-1: .5rem;
+  --space-2: 1rem;
+  --space-3: 1.5rem;
+  --space-4: 2.5rem;
+  --space-5: 4rem;
+  --space-6: clamp(4rem, 10vw, 8rem);
+  --gutter: clamp(1rem, 4vw, 2.5rem);
+  --header-h: 4rem;
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #0E0E10;
+  --surface: #1A1A1E;
+  --text: #F0EEE9;
+  --muted: #9A978F;
+  --accent: #C6FF3D;
+  --accent-contrast: #0E0E10;
+  --accent-text: #C6FF3D;
+  --border: color-mix(in srgb, #F0EEE9 14%, transparent);
+}
+
+/* Без JS: системная тёмная тема */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --bg: #0E0E10;
+    --surface: #1A1A1E;
+    --text: #F0EEE9;
+    --muted: #9A978F;
+    --accent: #C6FF3D;
+    --accent-contrast: #0E0E10;
+    --accent-text: #C6FF3D;
+    --border: color-mix(in srgb, #F0EEE9 14%, transparent);
+  }
+}

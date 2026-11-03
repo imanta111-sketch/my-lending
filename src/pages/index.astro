@@ -1,1 +1,7 @@
-<html lang="ru"><head><meta charset="utf-8" /><title>Лендинг</title></head><body></body></html>
+---
+import Base from '../layouts/Base.astro';
+import ThemeToggle from '../components/ThemeToggle.astro';
+---
+<Base locale="ru" title="Лендинг" description="Описание" altPath="/en/">
+  <ThemeToggle label="Переключить тему" />
+</Base>
