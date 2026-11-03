@@ -67,6 +67,40 @@ export const en: Dict = {
     facts: ['Tilda → vibe coding', 'Russian, English', 'Online, worldwide'],
     imageAlt: 'XXX at work',
   },
+  pricing: {
+    title: 'What it costs',
+    lead: 'Honest prices, upfront. I’ll name the exact amount after a short chat about your task.',
+    banner: 'Taking on my first projects: XXX% off in exchange for an honest review and permission to show the site in my portfolio.',
+    popular: 'Most popular',
+    includes: 'What’s included',
+    plans: [
+      {
+        name: 'Template as is', priceFrom: 'XXX', priceTo: 'XXX', popular: 'no',
+        includes: ['Your texts, photos and logo', 'Your colours', 'Mobile-friendly layout', 'Domain setup'],
+      },
+      {
+        name: 'Tailored to your business', priceFrom: 'XXX', priceTo: 'XXX', popular: 'yes',
+        includes: ['Everything in the first plan', 'Rearranged and new sections', 'Help with texts', 'Contact form and messenger buttons', 'Basic SEO', '2 rounds of changes'],
+      },
+      {
+        name: 'Tailored + support', priceFrom: 'XXX', priceTo: 'XXX', popular: 'no',
+        includes: ['Everything in the second plan', 'XXX months of support', 'Small edits', 'Speed and health checks'],
+      },
+    ],
+    note: 'The domain is paid separately (usually €XXX per year) and registered in your name.',
+    cta: 'I want a site like this',
+    faqTitle: 'Frequently asked questions',
+    faq: [
+      { q: 'What’s included in the price?', a: 'Everything listed in the plan. If something extra comes up, I’ll tell you the cost first and only do it after your “yes”.' },
+      { q: 'Do I need to buy a domain and hosting?', a: 'A domain — yes, I’ll help you choose and connect it. Hosting for sites like these is often free or costs a few euros a month.' },
+      { q: 'How many changes can I request?', a: 'The “Tailored to your business” plan includes 2 rounds of changes. Small typos are always fixed.' },
+      { q: 'Who owns the website?', a: 'You do. The domain, hosting and code are in your name, and I hand over all access after launch.' },
+      { q: 'How does payment work?', a: 'In two parts: XXX% before we start, the rest after you’ve accepted the site. I issue an official invoice.' },
+      { q: 'What if I need changes later?', a: 'Just message me: small edits are quick, and there’s a support plan for regular updates.' },
+      { q: 'Why is this better than Tilda?', a: 'The site loads faster, doesn’t depend on a site-builder subscription and is fully yours. The honest downside: changing complex things yourself is harder — that’s why there’s a support plan.' },
+      { q: 'Do you work with clients from other countries?', a: 'Yes — online, in Russian and English.' },
+    ],
+  },
   footer: {
     made: 'Made with AI and care',
     privacy: 'Privacy policy',

@@ -1,0 +1,27 @@
+---
+import { getDict, type Locale } from '../i18n';
+interface Props { locale: Locale }
+const t = getDict(Astro.props.locale).pricing;
+---
+<div class="faq">
+  <h3 class="faq-title">{t.faqTitle}</h3>
+  {t.faq.map((item) => (
+    <details>
+      <summary>{item.q}</summary>
+      <p>{item.a}</p>
+    </details>
+  ))}
+</div>
+<style>
+  .faq { margin-top: var(--space-5); max-width: 48rem; }
+  .faq-title { font-size: clamp(1.5rem, 3vw, 2rem); }
+  details { border-bottom: 1px solid var(--border); }
+  summary {
+    display: flex; justify-content: space-between; align-items: center; gap: var(--space-2);
+    min-height: 56px; padding-block: .75rem; cursor: pointer; font-weight: 600; font-size: 1.125rem; list-style: none;
+  }
+  summary::-webkit-details-marker { display: none; }
+  summary::after { content: '+'; font-family: var(--font-mono); font-size: 1.5rem; color: var(--accent-text); flex: none; }
+  details[open] summary::after { content: '−'; }
+  details p { color: var(--muted); padding-bottom: var(--space-2); }
+</style>
