@@ -2,8 +2,8 @@ import type { Dict } from './types';
 
 export const en: Dict = {
   meta: {
-    name: 'XXX',
-    title: 'XXX — fast, modern websites built with AI',
+    name: 'Rita Romanovskaia',
+    title: 'Rita Romanovskaia — fast, modern websites built with AI',
     description: 'Ready-made websites for small businesses and experts, tailored to you in a few days. AI designer based in Latvia, RU / EN.',
     altLabel: 'RU',
     altName: 'Русская версия',
@@ -28,7 +28,7 @@ export const en: Dict = {
     secondary: 'See templates ↓',
     follow: 'Follow for tips →',
     trust: 'This site is my first case study: Lighthouse XXX/100 · no cookies · 2 languages',
-    imageAlt: 'XXX — photo',
+    imageAlt: 'Rita Romanovskaia — portrait',
   },
   showcase: {
     title: 'Ready-made websites — pick your base',
@@ -63,9 +63,9 @@ export const en: Dict = {
   },
   about: {
     title: 'About me',
-    text: 'Hi! I’m XXX, an AI designer based in Latvia. I started with websites on Tilda, and now I build them together with artificial intelligence: it’s faster, and the sites come out lighter and more modern. To be honest, I’m at the start of my journey. That’s why I show my process openly and treat every project as my main case study.',
+    text: 'Hi! I’m Rita Romanovskaia, an AI designer based in Latvia. I started with websites on Tilda, and now I build them together with artificial intelligence: it’s faster, and the sites come out lighter and more modern. To be honest, I’m at the start of my journey. That’s why I show my process openly and treat every project as my main case study.',
     facts: ['Tilda → vibe coding', 'Russian, English', 'Online, worldwide'],
-    imageAlt: 'XXX at work',
+    imageAlt: 'Rita Romanovskaia, AI designer',
   },
   pricing: {
     title: 'What it costs',
@@ -106,7 +106,7 @@ export const en: Dict = {
     lead: 'I reply within one day. Message me wherever is easiest for you.',
     name: 'Your name',
     contact: 'How can I reach you',
-    contactHint: 'Instagram, WhatsApp, Telegram or email',
+    contactHint: 'Instagram, WhatsApp or email',
     message: 'Your task in a few words',
     messageHint: 'For example: a website for a coffee shop based on the “Café” template',
     consentBefore: 'I agree to my data being processed to answer my request. ',
@@ -122,7 +122,7 @@ export const en: Dict = {
     title: 'Privacy policy',
     updated: 'Updated: November 2026',
     sections: [
-      { h: 'Who processes your data', p: 'XXX, Latvia. Contact for data questions: XXX.' },
+      { h: 'Who processes your data', p: 'Rita Romanovskaia, Latvia. Contact for data questions: imanta111@gmail.com.' },
       { h: 'What data', p: 'Only what you enter in the form: your name, how to reach you and a description of your task.' },
       { h: 'Why', p: 'To answer your request and discuss the project. Legal basis: your consent (Art. 6(1)(a) GDPR).' },
       { h: 'Where it is stored', p: 'Requests are processed by Netlify (USA). Data transfers rely on the EU Standard Contractual Clauses.' },

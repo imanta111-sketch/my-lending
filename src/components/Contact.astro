@@ -9,7 +9,7 @@ const channels = [
   { href: links.whatsapp, label: 'WhatsApp' },
   { href: links.telegram, label: 'Telegram' },
   { href: links.email, label: 'Email' },
-];
+].filter((c) => c.href);
 ---
 <section id="contact" class="section">
   <div class="container wrap">

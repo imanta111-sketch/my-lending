@@ -36,3 +36,9 @@ for (const [path, soon, follow] of [['/', 'Скоро', /Подписаться/
     });
   });
 }
+
+test('в hero настоящее фото с именем в alt', async ({ page }) => {
+  await page.goto('/');
+  await expect(page.locator('#hero img')).toHaveAttribute('alt', /Rita Romanovskaia/);
+  await expect(page.locator('#hero img')).toHaveAttribute('src', /me\./);
+});

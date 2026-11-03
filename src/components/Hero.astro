@@ -1,6 +1,6 @@
 ---
 import { Image } from 'astro:assets';
-import hero from '../assets/hero.svg';
+import photo from '../assets/me.png';
 import { getDict, type Locale } from '../i18n';
 import { links } from '../data/contacts';
 interface Props { locale: Locale }
@@ -18,7 +18,7 @@ const t = getDict(Astro.props.locale).hero;
     <a class="text-link" href={links.instagram} rel="me noopener">{t.follow}</a>
     <p class="trust mono muted">{t.trust}</p>
   </div>
-  <Image class="photo" src={hero} alt={t.imageAlt} width={560} height={640} loading="eager" fetchpriority="high" />
+  <Image class="photo" src={photo} alt={t.imageAlt} width={480} densities={[1, 2]} loading="eager" fetchpriority="high" />
 </section>
 <style>
   .hero {

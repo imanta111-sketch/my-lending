@@ -49,8 +49,13 @@ for (const [path, privacy, promise] of [['/', '/privacy', /в течение д�
       await expect(page.locator('#contact .consent a')).toHaveAttribute('href', privacy);
     });
 
-    test('4 канала связи, каждый не ниже 44px', async ({ page }) => {
-      for (const prefix of ['https://ig.me/m/', 'https://wa.me/', 'https://t.me/', 'mailto:']) {
+    test('каналы: Instagram, WhatsApp, email (без Telegram и Facebook), каждый не ниже 44px', async ({ page }) => {
+      const channels = page.locator('#contact .channels a');
+      await expect(channels).toHaveCount(3);
+      await expect(page.locator('#contact .channels a[href^="https://ig.me/m/"]')).toHaveAttribute('href', 'https://ig.me/m/ritaexpert50');
+      await expect(page.locator('#contact .channels a[href^="https://wa.me/"]')).toHaveAttribute('href', 'https://wa.me/37122441485');
+      await expect(page.locator('#contact .channels a[href^="mailto:"]')).toHaveAttribute('href', 'mailto:imanta111@gmail.com');
+      for (const prefix of ['https://ig.me/m/', 'https://wa.me/', 'mailto:']) {
         const link = page.locator(`#contact .channels a[href^="${prefix}"]`);
         await expect(link).toHaveCount(1);
         expect((await link.boundingBox())!.height).toBeGreaterThanOrEqual(44);

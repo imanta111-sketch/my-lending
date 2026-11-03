@@ -1,4 +1,4 @@
-"""Генерирует SVG-заглушки для витрины и hero. Запуск: python scripts/make-placeholders.py"""
+"""Генерирует SVG-заглушки для витрины. Запуск: python scripts/make-placeholders.py"""
 from pathlib import Path
 
 root = Path(__file__).resolve().parent.parent / "src" / "assets"
@@ -26,11 +26,4 @@ for name, (a, b) in cols.items():
     )
     (root / "templates" / f"{name}.svg").write_text(svg, encoding="utf-8")
 
-(root / "hero.svg").write_text(
-    '<svg xmlns="http://www.w3.org/2000/svg" width="560" height="640" viewBox="0 0 560 640">'
-    '<rect width="560" height="640" rx="32" fill="#3B5BFF"/>'
-    '<circle cx="280" cy="250" r="110" fill="#F0EEE9" opacity=".9"/>'
-    '<path d="M90 640c20-150 110-230 190-230s170 80 190 230z" fill="#F0EEE9" opacity=".9"/></svg>',
-    encoding="utf-8",
-)
 print("ok")

@@ -1,13 +1,13 @@
 ---
 import { Image } from 'astro:assets';
-import photo from '../assets/hero.svg';
+import photo from '../assets/me.png';
 import { getDict, type Locale } from '../i18n';
 interface Props { locale: Locale }
 const t = getDict(Astro.props.locale).about;
 ---
 <section id="about" class="section">
   <div class="container about">
-    <Image class="photo" src={photo} alt={t.imageAlt} width={560} height={640} loading="lazy" />
+    <Image class="photo" src={photo} alt={t.imageAlt} width={384} densities={[1, 2]} loading="lazy" />
     <div>
       <h2>{t.title}</h2>
       <p class="text">{t.text}</p>
