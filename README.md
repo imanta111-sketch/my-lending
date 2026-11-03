@@ -46,9 +46,10 @@ CHROME_PATH="$(node -e "import('@playwright/test').then(m=>console.log(m.chromiu
 
 1. Залейте проект на GitHub, затем на netlify.com выберите «Add new site → Import from Git».
 2. Настройки сборки подтянутся из `netlify.toml`. **Сборка не пройдёт, пока остались `XXX`**: так задумано.
-3. После первого деплоя впишите реальный адрес в `site` в `astro.config.mjs`.
-4. Заявки с формы: Netlify → Forms → `contact`. Уведомления на почту: Forms → Form notifications → Email.
-5. Аналитика без cookie (по желанию): Netlify → Environment variables → `PUBLIC_ANALYTICS_SRC` и `PUBLIC_ANALYTICS_DOMAIN` (см. `.env.example`).
+3. Адрес сайта Netlify подставит сам (переменная `URL`). Локально `check:launch` напомнит про заглушку `example.netlify.app`, это нормально.
+4. **Включите приём форм:** Netlify → Forms → **Enable form detection**, затем Deploys → **Trigger deploy**. Без этого заявки молча теряются!
+5. Сразу отправьте тестовую заявку с сайта и проверьте, что она появилась в Netlify → Forms → `contact`. Уведомления на почту: Forms → Form notifications → Email.
+6. Аналитика без cookie (по желанию): Netlify → Environment variables → `PUBLIC_ANALYTICS_SRC` и `PUBLIC_ANALYTICS_DOMAIN` (см. `.env.example`).
 
 ## Чек-лист перед запуском (ТЗ §10–11, research 5.5)
 

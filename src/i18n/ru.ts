@@ -9,7 +9,7 @@ export const ru = {
   nav: {
     label: 'Основная навигация',
     skip: 'К содержанию',
-    theme: 'Переключить тему',
+    theme: 'Тёмная тема',
     items: [
       { href: '#showcase', label: 'Шаблоны' },
       { href: '#process', label: 'Как это работает' },

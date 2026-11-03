@@ -2,8 +2,8 @@ import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
-  // Заменить на реальный адрес после подключения Netlify
-  site: 'https://example.netlify.app',
+  // На Netlify адрес берётся из переменной URL автоматически; заглушку ловит npm run check:launch
+  site: process.env.URL ?? 'https://example.netlify.app',
   integrations: [
     sitemap({
       filter: (page) => !page.includes('/thanks'),

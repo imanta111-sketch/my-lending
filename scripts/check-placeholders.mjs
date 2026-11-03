@@ -9,7 +9,7 @@ export function findPlaceholders(files) {
   const found = [];
   for (const [file, content] of Object.entries(files)) {
     content.split('\n').forEach((text, i) => {
-      if (text.includes('XXX')) found.push({ file, line: i + 1, text: text.trim() });
+      if (text.includes('XXX') || text.includes('example.netlify.app')) found.push({ file, line: i + 1, text: text.trim() });
     });
   }
   return found;
@@ -28,7 +28,7 @@ if (process.argv[1] === fileURLToPath(import.meta.url)) {
   const found = findPlaceholders(files);
   if (found.length) {
     const byFile = Object.groupBy(found, (f) => f.file);
-    console.error(`Найдено строк с плейсхолдером XXX: ${found.length}. Замените их в src/i18n и src/data:`);
+    console.error(`Найдено строк с плейсхолдером XXX: ${found.length}. Замените их в src/i18n и src/data (и адрес сайта — см. README):`);
     for (const [file, items] of Object.entries(byFile)) console.error(`  ${file}: ${items.length}`);
     process.exit(1);
   }

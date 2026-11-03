@@ -9,3 +9,8 @@ test('находит XXX с номером строки', () => {
 test('чистые файлы — пустой список', () => {
   expect(findPlaceholders({ 'a.html': '<p>€300</p>' })).toEqual([]);
 });
+
+test('находит адрес-заглушку example.netlify.app', () => {
+  const found = findPlaceholders({ 'a.html': '<link rel="canonical" href="https://example.netlify.app/">' });
+  expect(found).toHaveLength(1);
+});

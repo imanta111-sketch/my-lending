@@ -11,7 +11,7 @@ export const en: Dict = {
   nav: {
     label: 'Main navigation',
     skip: 'Skip to content',
-    theme: 'Toggle theme',
+    theme: 'Dark theme',
     items: [
       { href: '#showcase', label: 'Templates' },
       { href: '#process', label: 'How it works' },
