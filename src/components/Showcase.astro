@@ -1,0 +1,54 @@
+---
+import { Image } from 'astro:assets';
+import { getDict, type Locale } from '../i18n';
+import { templates } from '../data/templates';
+interface Props { locale: Locale }
+const { locale } = Astro.props;
+const t = getDict(locale).showcase;
+---
+<section id="showcase" class="section">
+  <div class="container">
+    <h2>{t.title}</h2>
+    <p class="lead">{t.lead}</p>
+    <ul class="grid">
+      {templates.map((tpl) => (
+        <li class="card reveal" data-template={tpl.id} data-demo={tpl.demoUrl ? 'live' : 'none'}>
+          <Image src={tpl.image} alt="" width={640} height={420} loading="lazy" />
+          <div class="body">
+            <h3>{tpl.niche[locale]}</h3>
+            <p class="muted">{tpl.description[locale]}</p>
+            <p class="meta mono">
+              <span data-days>{tpl.days} {t.days}</span>
+              <span aria-hidden="true"> · </span>
+              <span data-price>€{tpl.priceFrom}–{tpl.priceTo}</span>
+            </p>
+            {tpl.demoUrl
+              ? <a class="btn-secondary" href={tpl.demoUrl} target="_blank" rel="noopener">{t.demo}</a>
+              : <span class="soon mono">{t.soon}</span>}
+          </div>
+        </li>
+      ))}
+    </ul>
+    <p class="not-found">{t.notFound} <a class="text-link" href="#contact">{t.notFoundCta}</a></p>
+  </div>
+</section>
+<style>
+  .grid {
+    list-style: none; margin: var(--space-4) 0; padding: 0;
+    display: grid; gap: var(--space-3); grid-template-columns: repeat(auto-fit, minmax(min(16rem, 100%), 1fr));
+  }
+  .card {
+    background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden;
+    display: flex; flex-direction: column;
+  }
+  .card img { width: 100%; height: auto; aspect-ratio: 640 / 420; object-fit: cover; }
+  .body { padding: var(--space-3); display: flex; flex-direction: column; gap: var(--space-1); flex: 1; }
+  .body p { margin: 0; }
+  .meta { color: var(--text); margin-top: auto !important; padding-top: var(--space-1); }
+  .body .btn-secondary, .soon { align-self: flex-start; margin-top: var(--space-1); }
+  .soon { display: inline-flex; align-items: center; min-height: 32px; padding: .25rem .75rem; border-radius: 999px; border: 1px dashed var(--muted); color: var(--muted); }
+  @media (prefers-reduced-motion: no-preference) {
+    .card { transition: border-color .15s ease; }
+    .card:hover { border-color: var(--accent-text); }
+  }
+</style>

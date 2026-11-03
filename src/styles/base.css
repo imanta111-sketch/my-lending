@@ -32,3 +32,20 @@ a { color: var(--accent-text); text-underline-offset: .2em; }
   display: inline-grid; place-items: center; min-width: 44px; min-height: 44px;
   border: 1px solid var(--border); border-radius: 999px; background: transparent; color: var(--text); cursor: pointer;
 }
+
+/* Кнопки — ТЗ §8 */
+.btn-primary, .btn-secondary {
+  display: inline-flex; align-items: center; justify-content: center; gap: .5rem;
+  min-height: 48px; padding: .75rem 1.5rem; border-radius: 999px;
+  font: 600 1rem/1.2 var(--font-sans); text-decoration: none; cursor: pointer;
+  border: 2px solid transparent;
+}
+.btn-primary { background: var(--accent); color: var(--accent-contrast); }
+.btn-secondary { background: transparent; color: var(--text); border-color: var(--border); }
+.btn-secondary:hover { border-color: var(--text); }
+@media (prefers-reduced-motion: no-preference) {
+  .btn-primary, .btn-secondary { transition: transform .15s ease, border-color .15s ease; }
+  .btn-primary:hover { transform: translateY(-2px); }
+}
+.text-link { display: inline-flex; align-items: center; min-height: 44px; font-weight: 600; }
+.eyebrow { color: var(--muted); margin-bottom: var(--space-2); }
