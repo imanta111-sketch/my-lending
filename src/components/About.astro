@@ -10,7 +10,7 @@ const t = getDict(Astro.props.locale).about;
     <Image class="photo" src={photo} alt={t.imageAlt} width={384} densities={[1, 2]} loading="lazy" />
     <div>
       <h2>{t.title}</h2>
-      <p class="text">{t.text}</p>
+      {t.text.map((p) => <p class="text">{p}</p>)}
       <ul class="facts">
         {t.facts.map((f) => <li class="mono">{f}</li>)}
       </ul>

@@ -62,8 +62,12 @@ export const en: Dict = {
   },
   about: {
     title: 'About me',
-    text: 'Hi! I’m Rita Romanovskaia, an AI designer based in Latvia. I started with websites on Tilda, and now I build them together with artificial intelligence: it’s faster, and the sites come out lighter and more modern. To be honest, I’m at the start of my journey. That’s why I show my process openly and treat every project as my main case study.',
-    facts: ['Tilda → vibe coding', 'Russian, English', 'Online, worldwide'],
+    text: [
+      'Hi! I’m Rita Romanovskaia, a designer based in Latvia. I build one-page sites for small businesses and experts: a page where a visitor sees straight away what you do and can get in touch.',
+      'I work together with artificial intelligence: it saves time — mine and yours — and the sites come out light and fast, without heavy site builders.',
+      'Every piece of work above was built for one person’s real task, not for a portfolio. If something there feels close to what you need, I’ll rework it for your task and your terms.',
+    ],
+    facts: ['Also: logos, banners, chatbots', 'Russian, English', 'Online, worldwide'],
     imageAlt: 'Rita Romanovskaia, AI designer',
   },
   pricing: {

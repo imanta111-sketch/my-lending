@@ -17,10 +17,11 @@ for (const path of ['/', '/en/']) {
       }
     });
 
-    test('«Обо мне» — фото с alt и упоминание Tilda', async ({ page }) => {
+    test('«Обо мне» — фото с alt, три абзаца и без линии новичка', async ({ page }) => {
       const img = page.locator('#about img');
       await expect(img).toHaveAttribute('alt', /\S/);
-      await expect(page.locator('#about')).toContainText('Tilda');
+      await expect(page.locator('#about .text')).toHaveCount(3);
+      await expect(page.locator('#about')).not.toContainText(/в начале пути|start of my journey/);
     });
   });
 }
