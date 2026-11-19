@@ -2,6 +2,7 @@ node_modules/
 dist/
 .astro/
 .superpowers/
+.claude/worktrees/
 .lighthouseci/
 test-results/
 playwright-report/
