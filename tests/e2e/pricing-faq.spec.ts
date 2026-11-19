@@ -14,6 +14,12 @@ for (const path of ['/', '/en/']) {
       await expect(page.locator('#pricing a.btn-primary')).toHaveAttribute('href', '#contact');
     });
 
+    test('пакеты названы по результату, без шаблонов и без «первых проектов»', async ({ page }) => {
+      await expect(page.locator('#pricing')).toContainText(/Визитка|Business card/);
+      await expect(page.locator('#pricing').getByText(/шаблон|template/i)).toHaveCount(0);
+      await expect(page.locator('#pricing .banner')).toContainText(/5 клиентам|5 clients/);
+    });
+
     test('FAQ на <details>, не меньше 6 вопросов', async ({ page }) => {
       expect(await page.locator('#pricing details').count()).toBeGreaterThanOrEqual(6);
     });

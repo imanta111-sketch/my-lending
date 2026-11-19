@@ -73,20 +73,20 @@ export const en: Dict = {
   pricing: {
     title: 'What it costs',
     lead: 'Honest prices, upfront. I’ll name the exact amount after a short chat about your task.',
-    banner: 'Taking on my first projects: 25% off in exchange for an honest review and permission to show the site in my portfolio.',
+    banner: 'The first 5 clients get 25% off in exchange for an honest review and permission to show your site in my portfolio.',
     popular: 'Most popular',
     includes: 'What’s included',
     plans: [
       {
-        name: 'Template as is', priceFrom: '250', priceTo: '400', popular: 'no',
-        includes: ['Your texts, photos and logo', 'Your colours', 'Mobile-friendly layout', 'Domain setup'],
+        name: 'Business card', priceFrom: '250', priceTo: '400', popular: 'no',
+        includes: ['One page: who you are, what you do, how to reach you', 'Your texts, photos and logo', 'Mobile-friendly layout', 'Domain setup'],
       },
       {
-        name: 'Tailored to your business', priceFrom: '450', priceTo: '750', popular: 'yes',
-        includes: ['Everything in the first plan', 'Rearranged and new sections', 'Help with texts', 'Contact form and messenger buttons', 'Basic SEO', '2 rounds of changes'],
+        name: 'Landing page for your task', priceFrom: '450', priceTo: '750', popular: 'yes',
+        includes: ['Everything in the first plan', 'Sections built for your case', 'Help with texts', 'Contact form and messenger buttons', 'Basic SEO', '2 rounds of changes'],
       },
       {
-        name: 'Tailored + support', priceFrom: '650', priceTo: '1000', popular: 'no',
+        name: 'Landing page with support', priceFrom: '650', priceTo: '1000', popular: 'no',
         includes: ['Everything in the second plan', '3 months of support', 'Small edits', 'Speed and health checks'],
       },
     ],
@@ -96,7 +96,7 @@ export const en: Dict = {
     faq: [
       { q: 'What’s included in the price?', a: 'Everything listed in the plan. If something extra comes up, I’ll tell you the cost first and only do it after your “yes”.' },
       { q: 'Do I need to buy a domain and hosting?', a: 'A domain — yes, I’ll help you choose and connect it. Hosting for sites like these is often free or costs a few euros a month.' },
-      { q: 'How many changes can I request?', a: 'The “Tailored to your business” plan includes 2 rounds of changes. Small typos are always fixed.' },
+      { q: 'How many changes can I request?', a: 'The “Landing page for your task” plan includes 2 rounds of changes. Small typos are always fixed.' },
       { q: 'Who owns the website?', a: 'You do. The domain, hosting and code are in your name, and I hand over all access after launch.' },
       { q: 'How does payment work?', a: 'In two parts: 50% before we start, the rest after you’ve accepted the site. I issue an official invoice.' },
       { q: 'What if I need changes later?', a: 'Just message me: small edits are quick, and there’s a support plan for regular updates.' },
