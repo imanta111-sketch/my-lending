@@ -1,0 +1,703 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Запись на маникюр</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+
+<style>
+/* Layout: одна колонка шириной телефона; липкая шапка с переключателем роли, под ней блок "нужно сделать", затем таблица. */
+:root {
+  --bg: #faf7f8;
+  --surface: #ffffff;
+  --surface-2: #f3eef0;
+  --fg: #241e22;
+  --muted: #6e6269;
+  --line: #e7dde1;
+  --accent: #8c3f5d;
+  --accent-soft: #f7e9ef;
+  --ok: #19704a;
+  --ok-fg: #ffffff;
+  --ok-soft: #e0f1e7;
+  --wait: #8a5a10;
+  --wait-soft: #fbefdb;
+  --off: #8d8389;
+  --off-soft: #ece7e9;
+  --radius: 12px;
+  --font-display: "Unbounded", "Golos Text", system-ui, sans-serif;
+  --font-body: "Golos Text", system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #161215;
+    --surface: #211c20;
+    --surface-2: #2a2429;
+    --fg: #f2ebee;
+    --muted: #a99ba2;
+    --line: #342c31;
+    --accent: #e79ab6;
+    --accent-soft: #3a2430;
+    --ok: #63d294;
+    --ok-fg: #0d2318;
+    --ok-soft: #16331f;
+    --wait: #e7bb6c;
+    --wait-soft: #332714;
+    --off: #8d8389;
+    --off-soft: #2a2429;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #161215;
+  --surface: #211c20;
+  --surface-2: #2a2429;
+  --fg: #f2ebee;
+  --muted: #a99ba2;
+  --line: #342c31;
+  --accent: #e79ab6;
+  --accent-soft: #3a2430;
+  --ok: #63d294;
+  --ok-fg: #0d2318;
+  --ok-soft: #16331f;
+  --wait: #e7bb6c;
+  --wait-soft: #332714;
+  --off: #8d8389;
+  --off-soft: #2a2429;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.45;
+  -webkit-font-smoothing: antialiased;
+}
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0 0 auto;
+  height: env(safe-area-inset-top, 0px);
+  z-index: 10;
+  background: var(--surface);
+}
+
+.wrap {
+  max-width: 460px;
+  margin: 0 auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 0 48px;
+}
+
+/* --- шапка --- */
+.top {
+  position: sticky;
+  top: env(safe-area-inset-top, 0px);
+  z-index: 9;
+  background: var(--surface);
+  border-bottom: 1px solid var(--line);
+  margin-left: calc(-1 * max(16px, env(safe-area-inset-left, 0px)));
+  margin-right: calc(-1 * max(16px, env(safe-area-inset-right, 0px)));
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 12px 10px;
+}
+.brand {
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+.brand span { font-family: var(--font-body); font-size: 12px; font-weight: 500; color: var(--muted); letter-spacing: 0; }
+
+.demo {
+  margin-top: 10px;
+  border: 1px dashed var(--line);
+  border-radius: 10px;
+  padding: 8px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  background: var(--bg);
+}
+.demo-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  font-weight: 600;
+}
+.seg { display: flex; gap: 4px; background: var(--surface-2); padding: 3px; border-radius: 9px; }
+.seg button {
+  font: inherit;
+  font-size: 13px;
+  font-weight: 500;
+  border: 0;
+  background: transparent;
+  color: var(--muted);
+  padding: 5px 11px;
+  border-radius: 7px;
+  cursor: pointer;
+}
+.seg button[aria-pressed="true"] { background: var(--surface); color: var(--fg); box-shadow: 0 1px 2px rgba(0,0,0,.08); }
+.link-btn {
+  font: inherit; font-size: 12px; border: 0; background: none;
+  color: var(--muted); text-decoration: underline; cursor: pointer; padding: 4px;
+  margin-left: auto;
+}
+
+/* --- общее --- */
+h2 {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  font-weight: 700;
+  color: var(--muted);
+  margin: 26px 0 10px;
+}
+h2:first-of-type { margin-top: 20px; }
+.hint { font-size: 13px; color: var(--muted); margin: 0 0 10px; }
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 14px;
+}
+.cards { display: flex; flex-direction: column; gap: 10px; }
+
+.card-head { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; }
+.who { font-weight: 600; font-size: 16px; }
+.what { font-size: 13px; color: var(--muted); }
+.when {
+  font-variant-numeric: tabular-nums;
+  font-weight: 500;
+  font-size: 14px;
+  margin-top: 2px;
+}
+
+/* --- статусы --- */
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11.5px;
+  font-weight: 600;
+  padding: 3px 9px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+.pill::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+.pill.ok { background: var(--ok-soft); color: var(--ok); }
+.pill.wait { background: var(--wait-soft); color: var(--wait); }
+.pill.off { background: var(--off-soft); color: var(--off); }
+
+/* --- кнопки --- */
+.btn {
+  font: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  border: 1px solid var(--line);
+  background: var(--surface-2);
+  color: var(--fg);
+  padding: 9px 14px;
+  border-radius: 10px;
+  cursor: pointer;
+  min-height: 40px;
+}
+.btn:hover { border-color: var(--muted); }
+.btn-ok {
+  background: var(--ok);
+  color: var(--ok-fg);
+  border-color: transparent;
+}
+.btn-ok:hover { filter: brightness(1.08); }
+.btn-accent { background: var(--accent); color: var(--surface); border-color: transparent; }
+:root[data-theme="dark"] .btn-accent, :root:not([data-theme="light"]) .btn-accent { color: #1b1418; }
+@media (prefers-color-scheme: light) { :root:not([data-theme="dark"]) .btn-accent { color: #fff; } }
+.btn-accent:hover { filter: brightness(1.08); }
+.btn-quiet { background: transparent; color: var(--muted); font-weight: 500; }
+.btn-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
+.btn-row .btn { flex: 1 1 auto; min-width: 0; }
+
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+/* --- поля --- */
+label.field { display: flex; flex-direction: column; gap: 5px; flex: 1 1 110px; min-width: 0; }
+label.field > span { font-size: 11.5px; text-transform: uppercase; letter-spacing: 0.07em; color: var(--muted); font-weight: 600; }
+input[type="time"], input[type="date"], select {
+  font: inherit;
+  font-size: 15px;
+  font-variant-numeric: tabular-nums;
+  background: var(--bg);
+  color: var(--fg);
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  padding: 9px 10px;
+  min-height: 40px;
+  width: 100%;
+  min-width: 0;
+}
+.field-row { display: flex; gap: 8px; flex-wrap: wrap; align-items: flex-end; }
+
+/* --- таблица --- */
+.table-scroll { overflow-x: auto; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); }
+table { border-collapse: collapse; width: 100%; font-size: 13.5px; }
+th {
+  text-align: left;
+  font-size: 10.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  font-weight: 700;
+  padding: 9px 10px;
+  border-bottom: 1px solid var(--line);
+  white-space: nowrap;
+}
+td { padding: 10px; border-bottom: 1px solid var(--line); vertical-align: middle; }
+tr:last-child td { border-bottom: 0; }
+td.num { font-variant-numeric: tabular-nums; white-space: nowrap; font-weight: 500; }
+td.name { font-weight: 600; }
+td.st { text-align: right; }
+tr.is-ok td.num { color: var(--fg); }
+tr.is-off td { color: var(--off); }
+tr.is-off td.name { text-decoration: line-through; }
+.daybreak td {
+  background: var(--surface-2);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 700;
+  color: var(--muted);
+  padding: 7px 10px;
+}
+.empty { color: var(--muted); font-size: 13.5px; padding: 16px 10px; text-align: center; }
+
+.freeslot {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 11px 13px;
+}
+.freeslot .when { margin: 0; flex: 1 1 auto; min-width: 0; }
+.freeslot .btn { min-height: 36px; padding: 7px 13px; font-size: 13.5px; }
+
+.note {
+  background: var(--accent-soft);
+  border-radius: var(--radius);
+  padding: 12px 13px;
+  font-size: 13px;
+  color: var(--fg);
+}
+.note b { font-weight: 600; }
+
+.toast {
+  position: fixed;
+  left: max(16px, env(safe-area-inset-left, 0px));
+  right: max(16px, env(safe-area-inset-right, 0px));
+  bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+  margin: 0 auto;
+  max-width: 420px;
+  background: var(--fg);
+  color: var(--bg);
+  padding: 11px 14px;
+  border-radius: 11px;
+  font-size: 13.5px;
+  font-weight: 500;
+  text-align: center;
+  z-index: 20;
+  transition: opacity .18s ease, transform .18s ease;
+}
+.toast[hidden] { display: none !important; }
+.toast.enter { opacity: 0; transform: translateY(8px); }
+@media (prefers-reduced-motion: reduce) { .toast { transition: none; } }
+</style>
+
+<div class="wrap">
+  <div class="top">
+    <div class="brand">Маникюр <span>запись</span></div>
+    <div class="demo">
+      <span class="demo-label">Прототип</span>
+      <div class="seg" role="group" aria-label="Чьими глазами смотреть">
+        <button type="button" id="role-client" aria-pressed="true">Клиент</button>
+        <button type="button" id="role-master" aria-pressed="false">Мастер</button>
+      </div>
+      <button type="button" class="link-btn" id="reset">сбросить</button>
+    </div>
+  </div>
+  <main id="app"></main>
+</div>
+<div class="toast" id="toast" hidden></div>
+
+<script>
+(function () {
+  "use strict";
+
+  var MONTHS = ["янв","фев","мар","апр","мая","июн","июл","авг","сен","окт","ноя","дек"];
+  var ME = "Катя";
+
+  function iso(d) {
+    return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
+  }
+  function plusDays(n) {
+    var d = new Date();
+    d.setDate(d.getDate() + n);
+    return iso(d);
+  }
+  function human(isoStr) {
+    var p = isoStr.split("-");
+    return Number(p[2]) + " " + MONTHS[Number(p[1]) - 1];
+  }
+  function weekday(isoStr) {
+    var names = ["вс","пн","вт","ср","чт","пт","сб"];
+    return names[new Date(isoStr + "T12:00:00").getDay()];
+  }
+
+  var seed = function () {
+    return {
+      role: "client",
+      nextId: 100,
+      service: "Маникюр",
+      // свободное время, которое мастер открыла
+      slots: [
+        { id: 1, date: plusDays(7), time: "11:00" },
+        { id: 2, date: plusDays(7), time: "15:00" }
+      ],
+      // записи: time === null значит "ждёт времени"
+      records: [
+        { id: 11, who: "Маша", service: "Маникюр", date: plusDays(2), time: "10:00", status: "ok" },
+        { id: 12, who: "Оля", service: "Педикюр", date: plusDays(2), time: "13:00", status: "ok" },
+        { id: 13, who: ME, service: "Маникюр", date: plusDays(4), time: null, status: "wait_time" }
+      ]
+    };
+  };
+
+  var s = seed();
+
+  var app = document.getElementById("app");
+  var toastEl = document.getElementById("toast");
+  var toastTimer = null;
+
+  function toast(msg) {
+    toastEl.textContent = msg;
+    toastEl.hidden = false;
+    toastEl.classList.add("enter");
+    requestAnimationFrame(function () { toastEl.classList.remove("enter"); });
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { toastEl.hidden = true; }, 2600);
+  }
+
+  function esc(t) {
+    return String(t).replace(/[&<>"]/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c];
+    });
+  }
+
+  function statusPill(r) {
+    if (r.status === "ok") return '<span class="pill ok">принято</span>';
+    if (r.status === "cancelled") return '<span class="pill off">отменено</span>';
+    if (r.status === "wait_time") return '<span class="pill wait">ждёт времени</span>';
+    return '<span class="pill wait">ждёт подтверждения</span>';
+  }
+
+  function byDateTime(a, b) {
+    if (a.date !== b.date) return a.date < b.date ? -1 : 1;
+    return (a.time || "99:99") < (b.time || "99:99") ? -1 : 1;
+  }
+
+  function live() {
+    return s.records.filter(function (r) { return r.status !== "cancelled"; });
+  }
+  function countOnDay(date) {
+    return live().filter(function (r) { return r.date === date; }).length;
+  }
+
+  /* ---------------- экран мастера ---------------- */
+
+  function renderMaster() {
+    var todo = s.records.filter(function (r) {
+      return r.status === "wait_time" || r.status === "wait_confirm";
+    }).sort(byDateTime);
+
+    var html = "";
+
+    html += "<h2>Нужно решить" + (todo.length ? " &middot; " + todo.length : "") + "</h2>";
+    if (!todo.length) {
+      html += '<div class="card"><div class="hint" style="margin:0">Всё разобрано. Новые записи появятся здесь.</div></div>';
+    } else {
+      html += '<div class="cards">';
+      todo.forEach(function (r) {
+        var others = countOnDay(r.date) - 1;
+        html += '<div class="card">';
+        html += '<div class="card-head"><span class="who">' + esc(r.who) + '</span><span class="what">' + esc(r.service) + "</span>" + statusPill(r) + "</div>";
+        html += '<div class="when">' + human(r.date) + ", " + weekday(r.date);
+        html += r.time ? ", <strong>" + r.time + "</strong>" : ", время не стоит";
+        html += "</div>";
+        html += '<div class="hint" style="margin:6px 0 0">' + (others > 0
+          ? "В этот день уже " + others + (others === 1 ? " человек" : " человека")
+          : "В этот день пока никого больше") + "</div>";
+
+        if (r.status === "wait_time") {
+          html += '<div class="field-row" style="margin-top:12px">';
+          html += '<label class="field"><span>Поставить время</span><input type="time" id="t-' + r.id + '" value="10:00"></label>';
+          html += '<button type="button" class="btn btn-ok" data-act="accept-time" data-id="' + r.id + '">Принимается</button>';
+          html += "</div>";
+        } else {
+          html += '<div class="btn-row">';
+          html += '<button type="button" class="btn btn-ok" data-act="accept" data-id="' + r.id + '">Принимается</button>';
+          html += '<button type="button" class="btn btn-quiet" data-act="cancel" data-id="' + r.id + '">Отменить</button>';
+          html += "</div>";
+        }
+        html += "</div>";
+      });
+      html += "</div>";
+    }
+
+    // фильтр
+    var dates = {};
+    live().forEach(function (r) { dates[r.date] = 1; });
+    s.slots.forEach(function (sl) { dates[sl.date] = 1; });
+    var dateList = Object.keys(dates).sort();
+
+    html += "<h2>Записи</h2>";
+    html += '<div class="field-row" style="margin-bottom:10px">';
+    html += '<label class="field" style="flex:1 1 100%"><span>Показать</span><select id="filter"><option value="all">Весь период</option>';
+    dateList.forEach(function (d) {
+      html += '<option value="' + d + '"' + (s.filter === d ? " selected" : "") + ">" + human(d) + ", " + weekday(d) + "</option>";
+    });
+    html += "</select></label></div>";
+
+    var rows = s.records.slice().sort(byDateTime).filter(function (r) {
+      return !s.filter || s.filter === "all" || r.date === s.filter;
+    });
+
+    html += '<div class="table-scroll"><table><thead><tr><th>Число</th><th>Время</th><th>Человек</th><th></th></tr></thead><tbody>';
+    if (!rows.length) {
+      html += '<tr><td colspan="4" class="empty">Записей нет</td></tr>';
+    } else {
+      var lastDate = null;
+      rows.forEach(function (r) {
+        if (r.date !== lastDate) {
+          lastDate = r.date;
+          var n = countOnDay(r.date);
+          html += '<tr class="daybreak"><td colspan="4">' + human(r.date) + ", " + weekday(r.date) +
+            " &middot; " + n + (n === 1 ? " человек" : " человека") + "</td></tr>";
+        }
+        var cls = r.status === "ok" ? "is-ok" : (r.status === "cancelled" ? "is-off" : "");
+        html += '<tr class="' + cls + '">';
+        html += '<td class="num">' + human(r.date) + "</td>";
+        html += '<td class="num">' + (r.time || "—") + "</td>";
+        html += '<td class="name">' + esc(r.who) + '<div class="what" style="font-weight:400">' + esc(r.service) + "</div></td>";
+        html += '<td class="st">' + statusPill(r) + "</td>";
+        html += "</tr>";
+      });
+    }
+    html += "</tbody></table></div>";
+
+    // открыть свободное время
+    var free = s.slots.slice().sort(byDateTime);
+    html += "<h2>Открыть свободное время</h2>";
+    html += '<p class="hint">Не обязательно заранее. Можно открыть день уже после того, как разобрались с первым человеком.</p>';
+    html += '<div class="card"><div class="field-row">';
+    html += '<label class="field"><span>Число</span><input type="date" id="new-date" value="' + plusDays(5) + '"></label>';
+    html += '<label class="field"><span>Время</span><input type="time" id="new-time" value="12:00"></label>';
+    html += '</div><div class="btn-row"><button type="button" class="btn btn-accent" data-act="add-slot">Открыть</button></div>';
+    html += "</div>";
+
+    if (free.length) {
+      html += '<h2>Открыто, ещё никто не занял</h2><div class="cards">';
+      free.forEach(function (sl) {
+        html += '<div class="freeslot"><div class="when">' + human(sl.date) + ", " + weekday(sl.date) + ", <strong>" + sl.time + "</strong></div>";
+        html += '<button type="button" class="btn btn-quiet" data-act="del-slot" data-id="' + sl.id + '">Убрать</button></div>';
+      });
+      html += "</div>";
+    }
+
+    app.innerHTML = html;
+  }
+
+  /* ---------------- экран клиента ---------------- */
+
+  function renderClient() {
+    var html = "";
+    var mine = s.records.filter(function (r) { return r.who === ME; }).sort(byDateTime);
+
+    html += "<h2>Моя запись</h2>";
+    if (!mine.length) {
+      html += '<div class="card"><div class="hint" style="margin:0">Записи пока нет.</div></div>';
+    } else {
+      html += '<div class="cards">';
+      mine.forEach(function (r) {
+        html += '<div class="card">';
+        html += '<div class="card-head"><span class="who">' + esc(r.service) + "</span>" + statusPill(r) + "</div>";
+        html += '<div class="when">' + human(r.date) + ", " + weekday(r.date);
+        html += r.time ? ", <strong>" + r.time + "</strong>" : "";
+        html += "</div>";
+        if (r.status === "wait_time") {
+          html += '<div class="hint" style="margin:6px 0 0">Мастер поставит время и отметит, что принимает.</div>';
+        }
+        if (r.status === "wait_confirm") {
+          html += '<div class="hint" style="margin:6px 0 0">Мастер ещё не подтвердила.</div>';
+        }
+        if (r.status === "ok") {
+          html += '<div class="hint" style="margin:6px 0 0">Договорились. Напомню вечером накануне.</div>';
+        }
+        if (r.status !== "cancelled") {
+          html += '<div class="btn-row">';
+          if (r.status === "ok" && r.time) {
+            html += '<button type="button" class="btn" data-act="reask" data-id="' + r.id + '">Время не подходит</button>';
+          }
+          html += '<button type="button" class="btn btn-quiet" data-act="cancel" data-id="' + r.id + '">Отменить запись</button>';
+          html += "</div>";
+        }
+        html += "</div>";
+      });
+      html += "</div>";
+    }
+
+    html += "<h2>Записаться</h2>";
+    html += '<div class="field-row" style="margin-bottom:12px"><div class="seg" role="group" aria-label="Услуга">';
+    ["Маникюр", "Педикюр"].forEach(function (name) {
+      html += '<button type="button" data-act="service" data-name="' + name + '" aria-pressed="' + (s.service === name) + '">' + name + "</button>";
+    });
+    html += "</div></div>";
+
+    var free = s.slots.slice().sort(byDateTime);
+    if (free.length) {
+      html += '<p class="hint">Свободное время, которое открыла мастер:</p><div class="cards">';
+      free.forEach(function (sl) {
+        html += '<div class="freeslot"><div class="when">' + human(sl.date) + ", " + weekday(sl.date) + ", <strong>" + sl.time + "</strong></div>";
+        html += '<button type="button" class="btn btn-accent" data-act="take" data-id="' + sl.id + '">Записаться</button></div>';
+      });
+      html += "</div>";
+    } else {
+      html += '<div class="note">Свободного времени сейчас нет. Впишитесь на нужное число — мастер поставит время сама.</div>';
+    }
+
+    html += "<h2>Нет подходящего времени</h2>";
+    html += '<p class="hint">Впишитесь на нужное число. Мастер поставит комфортное время и отметит, что принимает.</p>';
+    html += '<div class="card"><div class="field-row">';
+    html += '<label class="field"><span>Нужное число</span><input type="date" id="wish-date" value="' + plusDays(9) + '"></label>';
+    html += '</div><div class="btn-row"><button type="button" class="btn btn-accent" data-act="wish">Вписаться на это число</button></div>';
+    html += "</div>";
+
+    app.innerHTML = html;
+  }
+
+  function render() {
+    document.getElementById("role-client").setAttribute("aria-pressed", String(s.role === "client"));
+    document.getElementById("role-master").setAttribute("aria-pressed", String(s.role === "master"));
+    if (s.role === "master") renderMaster(); else renderClient();
+  }
+
+  /* ---------------- действия ---------------- */
+
+  document.getElementById("role-client").addEventListener("click", function () { s.role = "client"; render(); });
+  document.getElementById("role-master").addEventListener("click", function () { s.role = "master"; render(); });
+  document.getElementById("reset").addEventListener("click", function () {
+    var role = s.role;
+    s = seed();
+    s.role = role;
+    render();
+    toast("Прототип сброшен");
+  });
+
+  app.addEventListener("change", function (e) {
+    if (e.target.id === "filter") { s.filter = e.target.value; render(); }
+  });
+
+  app.addEventListener("click", function (e) {
+    var btn = e.target.closest("[data-act]");
+    if (!btn) return;
+    var act = btn.getAttribute("data-act");
+    var id = Number(btn.getAttribute("data-id"));
+    var rec = s.records.filter(function (r) { return r.id === id; })[0];
+
+    if (act === "service") {
+      s.service = btn.getAttribute("data-name");
+      render();
+      return;
+    }
+
+    if (act === "take") {
+      var slot = s.slots.filter(function (x) { return x.id === id; })[0];
+      if (!slot) return;
+      s.slots = s.slots.filter(function (x) { return x.id !== id; });
+      s.records.push({ id: s.nextId++, who: ME, service: s.service, date: slot.date, time: slot.time, status: "wait_confirm" });
+      render();
+      toast("Записались. Мастеру ушло уведомление");
+      return;
+    }
+
+    if (act === "wish") {
+      var d = document.getElementById("wish-date").value;
+      if (!d) { toast("Выберите число"); return; }
+      s.records.push({ id: s.nextId++, who: ME, service: s.service, date: d, time: null, status: "wait_time" });
+      render();
+      toast("Вписались на " + human(d) + ". Мастер поставит время");
+      return;
+    }
+
+    if (act === "accept-time") {
+      var input = document.getElementById("t-" + id);
+      if (!input || !input.value) { toast("Поставьте время"); return; }
+      rec.time = input.value;
+      rec.status = "ok";
+      render();
+      toast(rec.who + ": " + human(rec.date) + ", " + rec.time + " — принято");
+      return;
+    }
+
+    if (act === "accept") {
+      rec.status = "ok";
+      render();
+      toast(rec.who + " — принято");
+      return;
+    }
+
+    if (act === "reask") {
+      rec.time = null;
+      rec.status = "wait_time";
+      render();
+      toast("Мастер поставит другое время");
+      return;
+    }
+
+    if (act === "cancel") {
+      rec.status = "cancelled";
+      render();
+      toast(s.role === "master" ? "Запись отменена" : "Запись отменена, мастеру ушло уведомление");
+      return;
+    }
+
+    if (act === "add-slot") {
+      var nd = document.getElementById("new-date").value;
+      var nt = document.getElementById("new-time").value;
+      if (!nd || !nt) { toast("Укажите число и время"); return; }
+      s.slots.push({ id: s.nextId++, date: nd, time: nt });
+      render();
+      toast(human(nd) + ", " + nt + " — открыто");
+      return;
+    }
+
+    if (act === "del-slot") {
+      s.slots = s.slots.filter(function (x) { return x.id !== id; });
+      render();
+      toast("Убрано");
+      return;
+    }
+  });
+
+  render();
+})();
+</script>
+
+</body></html>

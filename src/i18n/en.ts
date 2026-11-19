@@ -130,6 +130,7 @@ export const en: Dict = {
       { h: 'How long', p: '12 months from your request, then deleted.' },
       { h: 'Your rights', p: 'You can request access to, correction or deletion of your data and withdraw consent by emailing the address above. You can also lodge a complaint with the Data State Inspectorate of Latvia (DVI).' },
       { h: 'Cookies', p: 'This site uses no cookies and no third-party trackers.' },
+      { h: 'The apps in “Work”', p: 'The mini-apps in the “Work” section keep your entries in your own browser only: nothing is sent anywhere, I cannot see it, and it is not shared with anyone. To remove it, clear this site’s data in your browser settings.' },
     ],
     back: 'Back to the site',
   },
