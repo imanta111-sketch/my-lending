@@ -20,7 +20,7 @@ npm run dev          # сайт откроется на http://localhost:4321
 | Сами мини-приложения из витрины | `public/works/<папка>/index.html` — лежат как есть, открываются по адресу `/works/<папка>/` |
 | Instagram, WhatsApp, Telegram, email | `src/data/contacts.ts` |
 | Фото в hero и «Обо мне» | `src/assets/hero.svg` (замените на `.jpg`/`.webp` и поправьте импорт в `Hero.astro` и `About.astro`) |
-| Картинки карточек в витрине | `src/assets/works/*.png` (снимки экрана 640×420) |
+| Картинки карточек в витрине | `src/assets/works/*.png` (снимки экрана 1280×840, это 2× от карточки 640×420) |
 | Цвета и шрифты | `src/styles/tokens.css` |
 | Картинка для соцсетей | `npm run og` после смены имени или заголовка → `public/og.png` |
 
