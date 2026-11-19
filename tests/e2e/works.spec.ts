@@ -3,11 +3,38 @@ import { readFileSync } from 'node:fs';
 
 const slugs = ['privychki', 'zapis', 'matematika'] as const;
 
+/** Что должно появиться на странице, если приложение действительно ожило, а не просто отдалось. */
+const alive: Record<(typeof slugs)[number], string> = {
+  privychki: '#days input[type="checkbox"]',
+  zapis: '#app h2',
+  matematika: '#app button',
+};
+
 for (const slug of slugs) {
-  test(`/works/${slug}/ открывается и не пустая`, async ({ page }) => {
+  test(`/works/${slug}/ открывается и оживает`, async ({ page }) => {
+    const errors: string[] = [];
+    page.on('pageerror', (e) => errors.push(e.message));
     const res = await page.goto(`/works/${slug}/`);
     expect(res!.status()).toBe(200);
-    await expect(page.locator('body')).not.toBeEmpty();
+    await expect(page.locator(alive[slug]).first()).toBeVisible();
+    expect(errors).toEqual([]);
+  });
+
+  test(`/works/${slug}/ работает при заблокированном хранилище`, async ({ page }) => {
+    const errors: string[] = [];
+    page.on('pageerror', (e) => errors.push(e.message));
+    await page.addInitScript(() => {
+      Object.defineProperty(window, 'localStorage', { get() { throw new Error('blocked'); } });
+    });
+    await page.goto(`/works/${slug}/`);
+    await expect(page.locator(alive[slug]).first()).toBeVisible();
+    expect(errors).toEqual([]);
+  });
+
+  test(`/works/${slug}/ объявляет язык страницы`, () => {
+    const html = readFileSync(`public/works/${slug}/index.html`, 'utf8');
+    expect(html).toMatch(/<html[^>]*\slang=/i);
+    expect(html).not.toMatch(/claude:/i);
   });
 
   test(`/works/${slug}/ без внешних запросов и без XXX`, () => {

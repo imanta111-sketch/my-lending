@@ -71,12 +71,14 @@ const tasks=[
 ['🧠','Самостоятельные дополнительные занятия','Математика, иностранный язык или другой учебный тренажёр.']
 ];
 const days=['Понедельник','Вторник','Среда','Четверг','Пятница','Суббота','Воскресенье'];
-let bank=Number(localStorage.getItem('bank')||0);
-let carry=Number(localStorage.getItem('carry')||0);
-let week=JSON.parse(localStorage.getItem('week')||'[]');
+// Хранилище браузера может быть запрещено настройками — тогда баллы просто не сохраняются, но тренажёр работает.
+var LS={get:function(k){try{return localStorage.getItem(k)}catch(e){return null}},set:function(k,v){try{localStorage.setItem(k,v)}catch(e){}}};
+let bank=Number(LS.get('bank')||0);
+let carry=Number(LS.get('carry')||0);
+let week=JSON.parse(LS.get('week')||'[]');
 
-document.getElementById('name').value=localStorage.getItem('childName')||'';
-document.getElementById('name').addEventListener('input',e=>localStorage.setItem('childName',e.target.value));
+document.getElementById('name').value=LS.get('childName')||'';
+document.getElementById('name').addEventListener('input',e=>LS.set('childName',e.target.value));
 
 function render(){
  document.getElementById('carry').textContent=carry;
@@ -96,7 +98,7 @@ function render(){
 function toggle(d,t,v){
  if(!week[d])week[d]=[];
  week[d][t]=v;
- localStorage.setItem('week',JSON.stringify(week));
+ LS.set('week',JSON.stringify(week));
  render();
 }
 function calcWeek(){
@@ -107,10 +109,10 @@ function finish(keep){
  const earned=calcWeek();
  if(keep){bank+=earned;carry=earned;}
  else{bank=0;carry=0;}
- localStorage.setItem('bank',bank);
- localStorage.setItem('carry',carry);
+ LS.set('bank',bank);
+ LS.set('carry',carry);
  week=[];
- localStorage.setItem('week','[]');
+ LS.set('week','[]');
  document.getElementById('status').textContent=keep
  ? `🎉 ${earned} баллов добавлено в копилку!`
  : '🔄 Баллы обнулены. Новая неделя начинается с 0.';
