@@ -1,52 +1,59 @@
-/* Палитра A «Cloud Dancer» — ТЗ §7 */
+/* Один цветовой сюжет: баклажан — ягода. Акцент взят из работы «Запись на маникюр». */
 :root {
   color-scheme: light;
-  --bg: #F0EEE9;
-  --surface: #FFFFFF;
-  --text: #141414;
-  --muted: #5C5A55;
-  --accent: #3B5BFF;
+  --bg: #FCFBF9;
+  --surface: #F5F2F4;
+  --text: #201A22;
+  --muted: #6B6370;
+  --accent: #8E2B57;
   --accent-contrast: #FFFFFF;
-  --accent-text: #2F4BE0;
-  --border: color-mix(in srgb, #141414 12%, transparent);
+  --accent-text: #8E2B57;
+  --border: color-mix(in srgb, #201A22 14%, transparent);
+  --rule: color-mix(in srgb, #201A22 16%, transparent);
 
-  --font-sans: 'Onest Variable', system-ui, sans-serif;
-  --font-mono: 'JetBrains Mono Variable', ui-monospace, monospace;
-  --radius: 20px;
-  --radius-sm: 12px;
+  --font-display: 'Unbounded Variable', 'Unbounded', system-ui, sans-serif;
+  --font-sans: 'Golos Text Variable', 'Golos Text', system-ui, sans-serif;
+
+  --radius: 10px;
+  --radius-sm: 6px;
   --space-1: .5rem;
   --space-2: 1rem;
   --space-3: 1.5rem;
   --space-4: 2.5rem;
   --space-5: 4rem;
-  --space-6: clamp(4rem, 10vw, 8rem);
+  --space-6: clamp(3.5rem, 9vw, 7rem);
   --gutter: clamp(1rem, 4vw, 2.5rem);
   --header-h: 4rem;
+  /* Отступ от левой линии-позвоночника: заголовки разделов свешиваются на него. */
+  --spine: clamp(1.25rem, 4vw, 3rem);
+  --measure: 68ch;
 }
 
 :root[data-theme="dark"] {
   color-scheme: dark;
-  --bg: #0E0E10;
-  --surface: #1A1A1E;
-  --text: #F0EEE9;
-  --muted: #9A978F;
-  --accent: #C6FF3D;
-  --accent-contrast: #0E0E10;
-  --accent-text: #C6FF3D;
-  --border: color-mix(in srgb, #F0EEE9 14%, transparent);
+  --bg: #161219;
+  --surface: #1F1A22;
+  --text: #F2EFF2;
+  --muted: #A098A6;
+  --accent: #F08BB4;
+  --accent-contrast: #161219;
+  --accent-text: #F08BB4;
+  --border: color-mix(in srgb, #F2EFF2 16%, transparent);
+  --rule: color-mix(in srgb, #F2EFF2 18%, transparent);
 }
 
 /* Без JS: системная тёмная тема */
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     color-scheme: dark;
-    --bg: #0E0E10;
-    --surface: #1A1A1E;
-    --text: #F0EEE9;
-    --muted: #9A978F;
-    --accent: #C6FF3D;
-    --accent-contrast: #0E0E10;
-    --accent-text: #C6FF3D;
-    --border: color-mix(in srgb, #F0EEE9 14%, transparent);
+    --bg: #161219;
+    --surface: #1F1A22;
+    --text: #F2EFF2;
+    --muted: #A098A6;
+    --accent: #F08BB4;
+    --accent-contrast: #161219;
+    --accent-text: #F08BB4;
+    --border: color-mix(in srgb, #F2EFF2 16%, transparent);
+    --rule: color-mix(in srgb, #F2EFF2 18%, transparent);
   }
 }

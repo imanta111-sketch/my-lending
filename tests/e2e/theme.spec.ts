@@ -24,9 +24,12 @@ test.describe('тёмная система', () => {
   test('фон страницы меняется вместе с темой', async ({ page }) => {
     await page.goto('/');
     const bg = () => page.evaluate(() => getComputedStyle(document.body).backgroundColor);
-    expect(await bg()).toBe('rgb(14, 14, 16)');
+    // Проверяем поведение, а не конкретные цвета: палитра может меняться.
+    const sum = (c: string) => c.match(/\d+/g)!.slice(0, 3).map(Number).reduce((a, b) => a + b, 0);
+    const dark = await bg();
+    expect(sum(dark)).toBeLessThan(240);
     await page.getByRole('button', { name: /тем/i }).click();
-    await expect.poll(bg).toBe('rgb(240, 238, 233)');
+    await expect.poll(async () => sum(await bg())).toBeGreaterThan(600);
   });
 });
 

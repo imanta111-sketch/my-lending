@@ -36,7 +36,13 @@ for (const path of ['/', '/en/'] as const) {
 
     test('на странице не осталось обещания выбрать шаблон', async ({ page }) => {
       await expect(page.locator('#hero, #process, #contact').getByText(/шаблон|template/i)).toHaveCount(0);
-      await expect(page.locator('#hero')).toContainText(/тоже моя работа|my work too/);
+    });
+
+    test('счётчик в первом экране показывает измеренные числа', async ({ page }) => {
+      const meter = page.locator('#hero [data-meter]');
+      await expect(meter).toContainText(/\d/, { timeout: 10000 });
+      await expect(meter).toContainText(/КБ|KB/);
+      await expect(meter.locator('b')).toHaveCount(3);
     });
 
     test('каждый пункт меню ведёт на существующую секцию', async ({ page }) => {

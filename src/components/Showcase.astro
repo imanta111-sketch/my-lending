@@ -10,13 +10,13 @@ const t = getDict(locale).works;
   <div class="container">
     <h2>{t.title}</h2>
     <p class="lead">{t.lead}</p>
-    <ul class="grid">
+    <ul class="rows">
       {works.map((w) => (
-        <li class="card reveal" data-work={w.id}>
-          <Image src={w.image} alt="" width={640} height={420} loading="lazy" />
+        <li class="row reveal" data-work={w.id}>
+          <Image class="shot" src={w.image} alt="" width={640} height={420} loading="lazy" />
           <div class="body">
             <h3>{w.title[locale]}</h3>
-            {locale === 'en' && w.newTab && <p class="lang mono">{t.langNote}</p>}
+            {locale === 'en' && w.newTab && <p class="meta">{t.langNote}</p>}
             <p class="muted">{w.description[locale]}</p>
             {w.newTab
               ? <a class="btn-secondary" href={w.href} target="_blank" rel="noopener">{t.open}</a>
@@ -29,21 +29,29 @@ const t = getDict(locale).works;
   </div>
 </section>
 <style>
-  .grid {
-    list-style: none; margin: var(--space-4) 0; padding: 0;
-    display: grid; gap: var(--space-3); grid-template-columns: repeat(auto-fit, minmax(min(16rem, 100%), 1fr));
+  .rows { list-style: none; margin: var(--space-5) 0 0; padding: 0; }
+  /* Полосы во всю ширину, снимок и текст меняются сторонами — вместо решётки одинаковых карточек. */
+  .row {
+    display: grid; gap: var(--space-3) var(--space-5); align-items: center;
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+    padding-block: var(--space-4);
+    border-top: 1px solid var(--rule);
   }
-  .card {
-    background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden;
-    display: flex; flex-direction: column;
+  .row:last-child { border-bottom: 1px solid var(--rule); }
+  .row:nth-child(even) .shot { grid-column: 2; grid-row: 1; }
+  .row:nth-child(even) .body { grid-column: 1; grid-row: 1; }
+  .shot {
+    width: 100%; height: auto; aspect-ratio: 640 / 420;
+    object-fit: cover; object-position: top center;
+    border-radius: var(--radius); border: 1px solid var(--border);
   }
-  .card img { width: 100%; height: auto; aspect-ratio: 640 / 420; object-fit: cover; object-position: top center; }
-  .body { padding: var(--space-3); display: flex; flex-direction: column; gap: var(--space-1); flex: 1; }
-  .body p { margin: 0; }
-  .lang { color: var(--muted); font-size: .8125rem; }
-  .body .btn-secondary { align-self: flex-start; margin-top: auto; }
-  @media (prefers-reduced-motion: no-preference) {
-    .card { transition: border-color .15s ease; }
-    .card:hover { border-color: var(--accent-text); }
+  .body p { margin: 0 0 var(--space-2); max-width: 46ch; }
+  .body h3 { margin-bottom: var(--space-1); }
+  .body .btn-secondary { margin-inline: 0; margin-top: var(--space-1); }
+  .bridge { margin-top: var(--space-4); }
+  @media (max-width: 48rem) {
+    .row { grid-template-columns: 1fr; padding-block: var(--space-4); }
+    .row:nth-child(even) .shot,
+    .row:nth-child(even) .body { grid-column: 1; grid-row: auto; }
   }
 </style>

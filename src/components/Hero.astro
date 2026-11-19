@@ -2,34 +2,82 @@
 import { Image } from 'astro:assets';
 import photo from '../assets/me.png';
 import { getDict, type Locale } from '../i18n';
-import { links } from '../data/contacts';
 interface Props { locale: Locale }
-const t = getDict(Astro.props.locale).hero;
+const { locale } = Astro.props;
+const t = getDict(locale).hero;
 ---
 <section id="hero" class="hero container">
   <div class="copy">
-    <p class="eyebrow mono">{t.eyebrow}</p>
     <h1>{t.title}</h1>
     <p class="lead">{t.subtitle}</p>
     <div class="actions">
       <a class="btn-primary" href="#contact">{t.cta}</a>
       <a class="btn-secondary" href="#showcase">{t.secondary}</a>
     </div>
-    <p class="trust mono muted">{t.trust}</p>
   </div>
-  <Image class="photo" src={photo} alt={t.imageAlt} width={480} densities={[1, 2]} loading="eager" fetchpriority="high" />
+  <Image class="photo" src={photo} alt={t.imageAlt} widths={[320, 480, 640, 960]}
+    sizes="(max-width: 48rem) 20rem, min(30rem, 38vw)" loading="eager" fetchpriority="high" />
+  <p class="meter" data-meter data-template={t.meter}>{t.trust}</p>
 </section>
 <style>
   .hero {
-    display: grid; gap: var(--space-4); align-items: center;
-    padding-block: clamp(2.5rem, 8vw, 6rem);
-    grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+    display: grid; gap: var(--space-4) var(--space-5); align-items: end;
+    padding-block: clamp(2.5rem, 8vw, 5.5rem) clamp(2rem, 5vw, 3.5rem);
+    grid-template-columns: minmax(0, 1.45fr) minmax(0, 1fr);
+    grid-template-areas: 'copy photo' 'meter photo';
   }
-  .actions { display: flex; flex-wrap: wrap; gap: var(--space-2); margin-block: var(--space-3) var(--space-1); }
-  .trust { margin-top: var(--space-3); }
-  .photo { width: 100%; border-radius: var(--radius); }
+  .copy { grid-area: copy; }
+  .photo { grid-area: photo; width: 100%; border-radius: var(--radius); }
+  .actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2); margin-top: var(--space-3); }
+
+  /* Счётчик: числа набраны display-гарнитурой — единственное место, где она попадает в текст. */
+  .meter {
+    grid-area: meter; align-self: end;
+    margin: 0; padding-top: var(--space-3);
+    border-top: 1px solid var(--rule);
+    font-size: .9375rem; line-height: 1.5; color: var(--muted);
+    min-height: 4.1rem; max-width: 34ch;
+  }
+  .meter :global(b) {
+    font-family: var(--font-display); font-weight: 500; font-size: 1.0625rem;
+    color: var(--text); letter-spacing: -0.02em;
+  }
   @media (max-width: 48rem) {
-    .hero { grid-template-columns: 1fr; }
-    .photo { max-width: 22rem; }
+    .hero { grid-template-columns: 1fr; grid-template-areas: 'copy' 'photo' 'meter'; align-items: start; }
+    .photo { max-width: 20rem; }
+    .meter { min-height: 0; }
   }
 </style>
+<script>
+  // Числа измеряются в браузере на этой же странице: подделать нельзя, оттого и стоят в первом экране.
+  const el = document.querySelector<HTMLElement>('[data-meter]');
+  const template = el?.dataset.template;
+  if (el && template && 'performance' in window) {
+    const render = () => {
+      try {
+        const nav = performance.getEntriesByType('navigation')[0] as PerformanceNavigationTiming | undefined;
+        const res = performance.getEntriesByType('resource') as PerformanceResourceTiming[];
+        const size = (e: { transferSize?: number; encodedBodySize?: number }) =>
+          Math.max(e.transferSize ?? 0, e.encodedBodySize ?? 0);
+        const bytes = res.reduce((sum, r) => sum + size(r), 0) + (nav ? size(nav) : 0);
+        const ms = nav?.domContentLoadedEventEnd ?? 0;
+        const foreign = res.filter((r) => {
+          try { return new URL(r.name, location.href).origin !== location.origin; } catch { return false; }
+        }).length;
+        if (!bytes || !ms) return;
+        const kb = Math.round(bytes / 1024).toLocaleString(document.documentElement.lang);
+        const s = (ms / 1000).toLocaleString(document.documentElement.lang, {
+          minimumFractionDigits: 2, maximumFractionDigits: 2,
+        });
+        el.innerHTML = template
+          .replace('{kb}', `<b>${kb}</b>`)
+          .replace('{s}', `<b>${s}</b>`)
+          .replace('{n}', `<b>${foreign}</b>`);
+      } catch {
+        /* Не вышло измерить — остаётся исходная фраза, она и так правдива. */
+      }
+    };
+    if (document.readyState === 'complete') render();
+    else window.addEventListener('load', render, { once: true });
+  }
+</script>

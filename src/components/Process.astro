@@ -9,7 +9,7 @@ const t = getDict(Astro.props.locale).process;
     <ol class="steps">
       {t.steps.map((s, i) => (
         <li class="step reveal">
-          <span class="num mono" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+          <span class="num" aria-hidden="true">{i + 1}</span>
           <h3>{s.title}</h3>
           <p class="muted">{s.text}</p>
         </li>

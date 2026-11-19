@@ -7,7 +7,7 @@ const t = getDict(locale).privacy;
 ---
 <SimplePage locale={locale} path="/privacy" title={t.title}>
   <h1>{t.title}</h1>
-  <p class="mono muted">{t.updated}</p>
+  <p class="meta">{t.updated}</p>
   {t.sections.map((s) => (
     <section>
       <h2 class="h">{s.h}</h2>

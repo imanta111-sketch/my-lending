@@ -4,7 +4,7 @@ export const en: Dict = {
   meta: {
     name: 'Rita Romanovskaia',
     title: 'Rita Romanovskaia — fast, modern websites built with AI',
-    description: 'One-page sites for small businesses and experts, built in a few days. AI designer based in Latvia, RU / EN.',
+    description: 'One-page sites for small businesses and experts, built in a few days. I work in Russian and English.',
     altLabel: 'RU',
     altName: 'Русская версия',
   },
@@ -21,21 +21,21 @@ export const en: Dict = {
     ],
   },
   hero: {
-    eyebrow: 'AI designer · Latvia · RU / EN',
     title: 'A fast, ready-made website for your business — tailored in 3–7 days',
     subtitle: 'I build modern websites together with AI: faster than a site builder, without extra costs.',
     cta: 'I want a site like this',
-    secondary: 'See my work ↓',
-    trust: 'This site is my work too: Lighthouse 90+/100 · no cookies · two languages',
+    secondary: 'See my work',
+    trust: 'This page makes no third-party requests and sets no cookies.',
+    meter: 'Weighs {kb} KB, opened in {s} s, third-party requests: {n}.',
     imageAlt: 'Rita Romanovskaia — portrait',
   },
   works: {
     title: 'Not only sites',
     lead: 'Besides websites I build small apps. All three open — try them.',
-    open: 'Open ↗',
-    howBuilt: 'How it is built ↓',
+    open: 'Open',
+    howBuilt: 'How it is built',
     langNote: 'Interface in Russian',
-    bridge: 'Need something like this? Tell me about your task →',
+    bridge: 'Need something like this? Tell me about your task',
   },
   process: {
     title: 'How it works — 4 steps',
@@ -61,7 +61,7 @@ export const en: Dict = {
   about: {
     title: 'About me',
     text: [
-      'Hi! I’m Rita Romanovskaia, a designer based in Latvia. I build one-page sites for small businesses and experts: a page where a visitor sees straight away what you do and can get in touch.',
+      'Hi! I’m Rita Romanovskaia, a designer. I build one-page sites for small businesses and experts: a page where a visitor sees straight away what you do and can get in touch.',
       'I work together with artificial intelligence: it saves time — mine and yours — and the sites come out light and fast, without heavy site builders.',
       'Every piece of work below was built for one person’s real task, not for a portfolio. If something there feels close to what you need, I’ll rework it for your task and your terms.',
     ],
