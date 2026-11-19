@@ -31,7 +31,7 @@
 
 ---
 
-### Задача 1: Приложения в `public/works/`
+### Task 1: Приложения в `public/works/`
 
 **Выполняет Клод в основной сессии:** HTML лежит в артефактах Claude, у исполнителя-субагента доступа к ним нет. Остальные задачи такого ограничения не имеют.
 
@@ -104,7 +104,7 @@ git commit -m "feat: host the three mini-apps under /works/"
 
 ---
 
-### Задача 2: Витрина «Мои работы»
+### Task 2: Витрина «Мои работы»
 
 **Files:**
 - Create: `src/data/works.ts`
@@ -223,7 +223,7 @@ git commit -m "feat: replace the template catalogue with a showcase of real work
 
 ---
 
-### Задача 3: «Обо мне»
+### Task 3: «Обо мне»
 
 **Files:**
 - Modify: `src/components/About.astro:13`, `src/i18n/ru.ts`, `src/i18n/en.ts`
@@ -269,7 +269,7 @@ git commit -m "content: rewrite About without resume filler"
 
 ---
 
-### Задача 4: Первый экран, процесс и остальные упоминания шаблонов
+### Task 4: Первый экран, процесс и остальные упоминания шаблонов
 
 **Files:**
 - Modify: `src/i18n/ru.ts`, `src/i18n/en.ts`
@@ -327,7 +327,7 @@ git commit -m "content: drop the template-catalogue promise from hero, process a
 
 ---
 
-### Задача 5: Пакеты в ценах
+### Task 5: Пакеты в ценах
 
 **Files:**
 - Modify: `src/i18n/ru.ts`, `src/i18n/en.ts`
