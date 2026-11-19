@@ -50,14 +50,13 @@ export const en: Dict = {
   },
   howBuilt: {
     title: 'How this site is built',
-    lead: 'What is done differently here than on a site builder — and how.',
-    link: 'Breakdown on Instagram ↗',
+    lead: 'Everything below is running on this page right now — see for yourself, no need to go anywhere.',
     items: [
-      { title: 'Scroll animations in pure CSS', text: 'No heavy libraries — sections gently appear as you reach them.', href: 'https://www.instagram.com/ritaexpert50/' },
-      { title: 'Smooth page transitions', text: 'Like in an app: pages flow into each other instead of flashing.', href: 'https://www.instagram.com/ritaexpert50/' },
-      { title: 'Dark and light theme', text: 'The site follows your phone’s settings automatically.', href: 'https://www.instagram.com/ritaexpert50/' },
-      { title: '90+ out of 100 in Google Lighthouse', text: 'Opens fast, even on mobile data.', href: 'https://www.instagram.com/ritaexpert50/' },
-      { title: 'No cookie banner', text: 'Analytics that doesn’t track visitors — and no pop-ups.', href: 'https://www.instagram.com/ritaexpert50/' },
+      { title: 'Scroll animations in pure CSS', text: 'No heavy libraries — sections gently appear as you reach them.' },
+      { title: 'Smooth page transitions', text: 'Like in an app: pages flow into each other instead of flashing.' },
+      { title: 'Dark and light theme', text: 'The site follows your phone’s settings automatically. The circle in the header switches it by hand — try it.' },
+      { title: '90+ out of 100 in Google Lighthouse', text: 'Opens fast, even on mobile data.' },
+      { title: 'No cookie banner', text: 'Analytics that doesn’t track visitors — and no pop-ups.' },
     ],
   },
   about: {

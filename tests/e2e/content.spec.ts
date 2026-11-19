@@ -9,12 +9,11 @@ for (const path of ['/', '/en/']) {
       await expect(page.locator('#process a.btn-primary')).toHaveAttribute('href', '#contact');
     });
 
-    test('«Как сделан этот сайт» — не меньше 4 пунктов со ссылкой на Instagram', async ({ page }) => {
+    test('«Как сделан этот сайт» — не меньше 4 пунктов и никого никуда не отсылает', async ({ page }) => {
       const items = page.locator('#how-built li');
       expect(await items.count()).toBeGreaterThanOrEqual(4);
-      for (const item of await items.all()) {
-        await expect(item.locator('a')).toHaveAttribute('href', /instagram\.com/);
-      }
+      await expect(page.locator('#how-built a[href*="instagram.com"]')).toHaveCount(0);
+      await expect(page.locator('#how-built a[target="_blank"]')).toHaveCount(0);
     });
 
     test('«Обо мне» — фото с alt, три абзаца и без линии новичка', async ({ page }) => {

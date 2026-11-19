@@ -144,6 +144,7 @@ body::before {
   cursor: pointer;
 }
 .seg button[aria-pressed="true"] { background: var(--surface); color: var(--fg); box-shadow: 0 1px 2px rgba(0,0,0,.08); }
+.demo-note { flex: 1 1 100%; order: 9; margin: 0; font-size: 12px; color: var(--muted); }
 .link-btn {
   font: inherit; font-size: 12px; border: 0; background: none;
   color: var(--muted); text-decoration: underline; cursor: pointer; padding: 4px;
@@ -325,6 +326,7 @@ tr.is-off td.name { text-decoration: line-through; }
     <div class="brand">Маникюр <span>запись</span></div>
     <div class="demo">
       <span class="demo-label">Прототип</span>
+      <p class="demo-note">Демонстрация: данные живут только в этой вкладке и никуда не отправляются.</p>
       <div class="seg" role="group" aria-label="Чьими глазами смотреть">
         <button type="button" id="role-client" aria-pressed="true">Клиент</button>
         <button type="button" id="role-master" aria-pressed="false">Мастер</button>
@@ -632,7 +634,7 @@ tr.is-off td.name { text-decoration: line-through; }
       s.slots = s.slots.filter(function (x) { return x.id !== id; });
       s.records.push({ id: s.nextId++, who: ME, service: s.service, date: slot.date, time: slot.time, status: "wait_confirm" });
       render();
-      toast("Записались. Мастеру ушло уведомление");
+      toast("Записались — в демонстрации заявка никуда не уходит");
       return;
     }
 
@@ -673,7 +675,7 @@ tr.is-off td.name { text-decoration: line-through; }
     if (act === "cancel") {
       rec.status = "cancelled";
       render();
-      toast(s.role === "master" ? "Запись отменена" : "Запись отменена, мастеру ушло уведомление");
+      toast("Запись отменена");
       return;
     }
 

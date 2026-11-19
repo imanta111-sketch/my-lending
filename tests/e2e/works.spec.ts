@@ -31,6 +31,11 @@ for (const slug of slugs) {
     expect(errors).toEqual([]);
   });
 
+  test(`/works/${slug}/ не утверждает, что что-то отправлено`, () => {
+    const html = readFileSync(new URL(`../../public/works/${slug}/index.html`, import.meta.url), 'utf8');
+    expect(html).not.toMatch(/ушло уведомление|уведомление ушло/i);
+  });
+
   test(`/works/${slug}/ объявляет язык страницы`, () => {
     const html = readFileSync(new URL(`../../public/works/${slug}/index.html`, import.meta.url), 'utf8');
     expect(html).toMatch(/<html[^>]*\slang=/i);
