@@ -31,7 +31,7 @@ export const en: Dict = {
   },
   works: {
     title: 'Not only sites',
-    lead: 'Besides websites I build small apps. All three open — click around.',
+    lead: 'Besides websites I build small apps. All three open — try them.',
     open: 'Open ↗',
     howBuilt: 'How it is built ↓',
     langNote: 'Interface in Russian',
