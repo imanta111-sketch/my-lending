@@ -33,6 +33,11 @@ for (const [path, follow] of [['/', /Подписаться/], ['/en/', /Follow/
       await expect(page.locator('#showcase').getByText(/Скоро|Soon/)).toHaveCount(0);
     });
 
+    test('на странице не осталось обещания выбрать шаблон', async ({ page }) => {
+      await expect(page.locator('#hero, #process, #contact').getByText(/шаблон|template/i)).toHaveCount(0);
+      await expect(page.locator('#hero')).toContainText(/тоже моя работа|my work too/);
+    });
+
     test('пункт меню витрины ведёт на существующую секцию', async ({ page }) => {
       const href = await page.locator('header nav a').first().getAttribute('href');
       expect(href).toContain('#');

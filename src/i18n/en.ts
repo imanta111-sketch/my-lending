@@ -4,7 +4,7 @@ export const en: Dict = {
   meta: {
     name: 'Rita Romanovskaia',
     title: 'Rita Romanovskaia — fast, modern websites built with AI',
-    description: 'Ready-made websites for small businesses and experts, tailored to you in a few days. AI designer based in Latvia, RU / EN.',
+    description: 'One-page sites for small businesses and experts, built in a few days. AI designer based in Latvia, RU / EN.',
     altLabel: 'RU',
     altName: 'Русская версия',
   },
@@ -25,9 +25,9 @@ export const en: Dict = {
     title: 'A fast, ready-made website for your business — tailored in 3–7 days',
     subtitle: 'I build modern websites together with AI: faster than a site builder, without extra costs. I break down every technique openly on my Instagram.',
     cta: 'I want a site like this',
-    secondary: 'See templates ↓',
+    secondary: 'See my work ↓',
     follow: 'Follow for tips →',
-    trust: 'This site is my first case study: Lighthouse 90+/100 · no cookies · 2 languages',
+    trust: 'This site is my work too: Lighthouse 90+/100 · no cookies · two languages',
     imageAlt: 'Rita Romanovskaia — portrait',
   },
   works: {
@@ -41,7 +41,7 @@ export const en: Dict = {
   process: {
     title: 'How it works — 4 steps',
     steps: [
-      { title: 'Pick a template', text: 'Or describe what you need — I’ll find the closest one.' },
+      { title: 'You tell me about the task', text: 'What the business is, what the site has to do, who it is for. No texts yet? I’ll help you write them.' },
       { title: 'Send your materials', text: 'Texts, photos, logo. No texts yet? I’ll help you write them.' },
       { title: 'I tailor the site', text: 'Colours, fonts and sections for your business. I show you a draft, you request changes.' },
       { title: 'Launch', text: 'I connect your domain and hand over all access. The site is fully yours.' },
@@ -50,7 +50,7 @@ export const en: Dict = {
   },
   howBuilt: {
     title: 'How this site is built',
-    lead: 'I learn in public. Every feature of this site is broken down in its own post.',
+    lead: 'What is done differently here than on a site builder — and how.',
     link: 'Breakdown on Instagram ↗',
     items: [
       { title: 'Scroll animations in pure CSS', text: 'No heavy libraries — sections gently appear as you reach them.', href: 'https://www.instagram.com/ritaexpert50/' },
@@ -111,7 +111,7 @@ export const en: Dict = {
     contact: 'How can I reach you',
     contactHint: 'Instagram, WhatsApp or email',
     message: 'Your task in a few words',
-    messageHint: 'For example: a website for a coffee shop based on the “Café” template',
+    messageHint: 'For example: a site for a coffee shop — menu, opening hours and a map',
     consentBefore: 'I agree to my data being processed to answer my request. ',
     consentLink: 'Privacy policy',
     submit: 'Send request',
