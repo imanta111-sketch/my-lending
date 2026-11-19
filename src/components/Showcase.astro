@@ -1,35 +1,31 @@
 ---
 import { Image } from 'astro:assets';
 import { getDict, type Locale } from '../i18n';
-import { templates } from '../data/templates';
+import { works } from '../data/works';
 interface Props { locale: Locale }
 const { locale } = Astro.props;
-const t = getDict(locale).showcase;
+const t = getDict(locale).works;
 ---
 <section id="showcase" class="section">
   <div class="container">
     <h2>{t.title}</h2>
     <p class="lead">{t.lead}</p>
     <ul class="grid">
-      {templates.map((tpl) => (
-        <li class="card reveal" data-template={tpl.id} data-demo={tpl.demoUrl ? 'live' : 'none'}>
-          <Image src={tpl.image} alt="" width={640} height={420} loading="lazy" />
+      {works.map((w) => (
+        <li class="card reveal" data-work={w.id}>
+          <Image src={w.image} alt="" width={640} height={420} loading="lazy" />
           <div class="body">
-            <h3>{tpl.niche[locale]}</h3>
-            <p class="muted">{tpl.description[locale]}</p>
-            <p class="meta mono">
-              <span data-days>{tpl.days} {t.days}</span>
-              <span aria-hidden="true"> · </span>
-              <span data-price>€{tpl.priceFrom}–{tpl.priceTo}</span>
-            </p>
-            {tpl.demoUrl
-              ? <a class="btn-secondary" href={tpl.demoUrl} target="_blank" rel="noopener">{t.demo}</a>
-              : <span class="soon mono">{t.soon}</span>}
+            <h3>{w.title[locale]}</h3>
+            {locale === 'en' && w.newTab && <p class="lang mono">{t.langNote}</p>}
+            <p class="muted">{w.description[locale]}</p>
+            {w.newTab
+              ? <a class="btn-secondary" href={w.href} target="_blank" rel="noopener">{t.open}</a>
+              : <a class="btn-secondary" href={w.href}>{t.howBuilt}</a>}
           </div>
         </li>
       ))}
     </ul>
-    <p class="not-found">{t.notFound} <a class="text-link" href="#contact">{t.notFoundCta}</a></p>
+    <p class="not-found"><a class="text-link" href="#contact">{t.bridge}</a></p>
   </div>
 </section>
 <style>
@@ -41,12 +37,11 @@ const t = getDict(locale).showcase;
     background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden;
     display: flex; flex-direction: column;
   }
-  .card img { width: 100%; height: auto; aspect-ratio: 640 / 420; object-fit: cover; }
+  .card img { width: 100%; height: auto; aspect-ratio: 640 / 420; object-fit: cover; object-position: top center; }
   .body { padding: var(--space-3); display: flex; flex-direction: column; gap: var(--space-1); flex: 1; }
   .body p { margin: 0; }
-  .meta { color: var(--text); margin-top: auto !important; padding-top: var(--space-1); }
-  .body .btn-secondary, .soon { align-self: flex-start; margin-top: var(--space-1); }
-  .soon { display: inline-flex; align-items: center; min-height: 32px; padding: .25rem .75rem; border-radius: 999px; border: 1px dashed var(--muted); color: var(--muted); }
+  .lang { color: var(--muted); font-size: .8125rem; }
+  .body .btn-secondary { align-self: flex-start; margin-top: auto; }
   @media (prefers-reduced-motion: no-preference) {
     .card { transition: border-color .15s ease; }
     .card:hover { border-color: var(--accent-text); }

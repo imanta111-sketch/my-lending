@@ -16,10 +16,11 @@ npm run dev          # сайт откроется на http://localhost:4321
 |---|---|
 | Все тексты на русском | `src/i18n/ru.ts` |
 | Все тексты на английском (структура должна совпадать с русской) | `src/i18n/en.ts` |
-| Шаблоны в витрине: ниша, срок, цена, ссылка на демо | `src/data/templates.ts` (`demoUrl: null` → метка «Скоро») |
+| Работы в витрине: название, описание, ссылка | `src/data/works.ts` |
+| Сами мини-приложения из витрины | `public/works/<папка>/index.html` — лежат как есть, открываются по адресу `/works/<папка>/` |
 | Instagram, WhatsApp, Telegram, email | `src/data/contacts.ts` |
 | Фото в hero и «Обо мне» | `src/assets/hero.svg` (замените на `.jpg`/`.webp` и поправьте импорт в `Hero.astro` и `About.astro`) |
-| Картинки шаблонов | `src/assets/templates/*.svg` (скриншоты демо) |
+| Картинки карточек в витрине | `src/assets/works/*.png` (снимки экрана 640×420) |
 | Цвета и шрифты | `src/styles/tokens.css` |
 | Картинка для соцсетей | `npm run og` после смены имени или заголовка → `public/og.png` |
 

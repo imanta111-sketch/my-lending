@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 
-for (const [path, soon, follow] of [['/', 'Скоро', /Подписаться/], ['/en/', 'Soon', /Follow/]] as const) {
+for (const [path, follow] of [['/', /Подписаться/], ['/en/', /Follow/]] as const) {
   test.describe(path, () => {
     test.beforeEach(async ({ page }) => { await page.goto(path); });
 
@@ -20,19 +20,23 @@ for (const [path, soon, follow] of [['/', 'Скоро', /Подписаться/
       await expect(page.locator('#hero').getByRole('link', { name: follow })).toHaveAttribute('href', /instagram\.com/);
     });
 
-    test('4 карточки витрины с ценой и сроком', async ({ page }) => {
-      const cards = page.locator('#showcase [data-template]');
+    test('4 карточки витрины, у каждой работающая ссылка и нет цены', async ({ page }) => {
+      const cards = page.locator('#showcase [data-work]');
       await expect(cards).toHaveCount(4);
       for (const card of await cards.all()) {
-        await expect(card.locator('[data-price]')).toContainText('€');
-        await expect(card.locator('[data-days]')).toBeVisible();
+        await expect(card.locator('a')).toHaveCount(1);
+        await expect(card.locator('[data-price]')).toHaveCount(0);
       }
     });
 
-    test('карточка без демо показывает «скоро» и не ссылается на демо', async ({ page }) => {
-      const card = page.locator('#showcase [data-template][data-demo="none"]').first();
-      await expect(card).toContainText(soon);
-      await expect(card.locator('a')).toHaveCount(0);
+    test('нет метки «скоро» и карточек без ссылки', async ({ page }) => {
+      await expect(page.locator('#showcase').getByText(/Скоро|Soon/)).toHaveCount(0);
+    });
+
+    test('пункт меню витрины ведёт на существующую секцию', async ({ page }) => {
+      const href = await page.locator('header nav a').first().getAttribute('href');
+      expect(href).toContain('#');
+      await expect(page.locator(href!.slice(href!.indexOf('#')))).toHaveCount(1);
     });
   });
 }

@@ -16,3 +16,18 @@ for (const slug of slugs) {
     expect(html).not.toContain('XXX');
   });
 }
+
+test('ссылки витрины ведут на существующие страницы', async ({ page }) => {
+  await page.goto('/');
+  const links = page.locator('#showcase [data-work] a[href^="/works/"]');
+  expect(await links.count()).toBeGreaterThan(0);
+  for (const a of await links.all()) {
+    const res = await page.request.get((await a.getAttribute('href'))!);
+    expect(res.status()).toBe(200);
+  }
+});
+
+test('английская витрина предупреждает про русский интерфейс', async ({ page }) => {
+  await page.goto('/en/');
+  await expect(page.locator('#showcase [data-work]').first()).toContainText(/Russian/i);
+});

@@ -13,7 +13,7 @@ export const en: Dict = {
     skip: 'Skip to content',
     theme: 'Dark theme',
     items: [
-      { href: '#showcase', label: 'Templates' },
+      { href: '#showcase', label: 'Work' },
       { href: '#process', label: 'How it works' },
       { href: '#about', label: 'About' },
       { href: '#pricing', label: 'Pricing' },
@@ -30,14 +30,13 @@ export const en: Dict = {
     trust: 'This site is my first case study: Lighthouse 90+/100 · no cookies · 2 languages',
     imageAlt: 'Rita Romanovskaia — portrait',
   },
-  showcase: {
-    title: 'Ready-made websites — pick your base',
-    lead: 'Every template is a live website. You pick a base and send your texts and photos — I tailor the site to your business.',
-    days: 'days',
-    demo: 'View demo ↗',
-    soon: 'Soon',
-    notFound: 'Can’t find your niche? Describe your task — I’ll suggest the closest template.',
-    notFoundCta: 'Describe my task',
+  works: {
+    title: 'My work',
+    lead: 'All of it built by me — open it and click around.',
+    open: 'Open ↗',
+    howBuilt: 'How it is built ↓',
+    langNote: 'Interface in Russian',
+    bridge: 'Need something like this? Tell me about your task →',
   },
   process: {
     title: 'How it works — 4 steps',
