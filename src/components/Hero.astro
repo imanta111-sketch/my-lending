@@ -15,7 +15,6 @@ const t = getDict(Astro.props.locale).hero;
       <a class="btn-primary" href="#contact">{t.cta}</a>
       <a class="btn-secondary" href="#showcase">{t.secondary}</a>
     </div>
-    <a class="text-link" href={links.instagram} rel="me noopener">{t.follow}</a>
     <p class="trust mono muted">{t.trust}</p>
   </div>
   <Image class="photo" src={photo} alt={t.imageAlt} width={480} densities={[1, 2]} loading="eager" fetchpriority="high" />

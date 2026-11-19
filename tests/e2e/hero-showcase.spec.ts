@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 
-for (const [path, follow] of [['/', /Подписаться/], ['/en/', /Follow/]] as const) {
+for (const path of ['/', '/en/'] as const) {
   test.describe(path, () => {
     test.beforeEach(async ({ page }) => { await page.goto(path); });
 
@@ -16,13 +16,14 @@ for (const [path, follow] of [['/', /Подписаться/], ['/en/', /Follow/
       expect(box!.height).toBeGreaterThanOrEqual(44);
     });
 
-    test('ссылка подписки ведёт в Instagram', async ({ page }) => {
-      await expect(page.locator('#hero').getByRole('link', { name: follow })).toHaveAttribute('href', /instagram\.com/);
+    test('в первом экране нет призыва подписаться', async ({ page }) => {
+      await expect(page.locator('#hero').getByText(/подпис/i)).toHaveCount(0);
+      await expect(page.locator('#hero a[href*="instagram.com"]')).toHaveCount(0);
     });
 
-    test('4 карточки витрины, у каждой работающая ссылка и нет цены', async ({ page }) => {
+    test('3 карточки витрины, у каждой работающая ссылка и нет цены', async ({ page }) => {
       const cards = page.locator('#showcase [data-work]');
-      await expect(cards).toHaveCount(4);
+      await expect(cards).toHaveCount(3);
       for (const card of await cards.all()) {
         await expect(card.locator('a')).toHaveCount(1);
         await expect(card.locator('[data-price]')).toHaveCount(0);
@@ -38,10 +39,14 @@ for (const [path, follow] of [['/', /Подписаться/], ['/en/', /Follow/
       await expect(page.locator('#hero')).toContainText(/тоже моя работа|my work too/);
     });
 
-    test('пункт меню витрины ведёт на существующую секцию', async ({ page }) => {
-      const href = await page.locator('header nav a').first().getAttribute('href');
-      expect(href).toContain('#');
-      await expect(page.locator(href!.slice(href!.indexOf('#')))).toHaveCount(1);
+    test('каждый пункт меню ведёт на существующую секцию', async ({ page }) => {
+      const items = page.locator('header nav a');
+      expect(await items.count()).toBeGreaterThanOrEqual(4);
+      for (const a of await items.all()) {
+        const href = await a.getAttribute('href');
+        expect(href).toContain('#');
+        await expect(page.locator(href!.slice(href!.indexOf('#')))).toHaveCount(1);
+      }
     });
   });
 }

@@ -59,16 +59,6 @@ test('ссылки витрины ведут на существующие ст�
   }
 });
 
-test('якорные ссылки витрины ведут на существующие секции', async ({ page }) => {
-  await page.goto('/');
-  const links = page.locator('#showcase [data-work] a[href^="#"]');
-  expect(await links.count()).toBeGreaterThan(0);
-  for (const a of await links.all()) {
-    const href = await a.getAttribute('href');
-    await expect(page.locator(href!)).toHaveCount(1);
-  }
-});
-
 test('английская витрина предупреждает про русский интерфейс', async ({ page }) => {
   await page.goto('/en/');
   await expect(page.locator('#showcase [data-work]').first()).toContainText(/Russian/i);

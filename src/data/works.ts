@@ -1,11 +1,10 @@
 import privychki from '../assets/works/privychki.png';
 import zapis from '../assets/works/zapis.png';
 import matematika from '../assets/works/matematika.png';
-import thisSite from '../assets/works/this-site.png';
 import type { Locale } from '../i18n';
 
 export type Work = {
-  id: 'privychki' | 'zapis' | 'matematika' | 'this-site';
+  id: 'privychki' | 'zapis' | 'matematika';
   title: Record<Locale, string>;
   description: Record<Locale, string>;
   /** Путь внутри сайта: страница приложения или якорь на секцию. */
@@ -48,16 +47,5 @@ export const works: Work[] = [
     href: '/works/matematika/',
     newTab: true,
     image: matematika,
-  },
-  {
-    id: 'this-site',
-    title: { ru: 'Этот сайт', en: 'This very site' },
-    description: {
-      ru: 'Тот самый лендинг, который вы читаете: быстрый, с тёмной темой и без cookie. Разбор — чуть ниже.',
-      en: 'The landing page you are reading: fast, with a dark theme and no cookies. The breakdown is just below.',
-    },
-    href: '#how-built',
-    newTab: false,
-    image: thisSite,
   },
 ];

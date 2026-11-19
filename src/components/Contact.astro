@@ -23,9 +23,6 @@ const channels = [
           <li><a class="btn-secondary" href={c.href} target={c.href.startsWith('mailto:') ? undefined : '_blank'} rel="noopener">{c.label}</a></li>
         ))}
       </ul>
-      <p class="subscribe">
-        {t.subscribeText} <a href={links.instagram} rel="me noopener">{t.subscribeLink}</a> {t.subscribeAfter}
-      </p>
     </div>
 
     <form class="form" name="contact" method="POST" action="https://api.web3forms.com/submit">
