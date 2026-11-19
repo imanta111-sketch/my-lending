@@ -73,6 +73,18 @@ Data separate from copy:
 
 `tests/e2e/a11y.spec.ts` asserts zero axe WCAG 2.2 AA violations on a fixed page list in both colour schemes; `lighthouserc.json` asserts ≥0.9 performance and ≥0.95 accessibility / best-practices / SEO on `/` and `/en/`. **`/works/*` is deliberately in neither list** — the vendored apps are not held to the landing's bars.
 
+## Design system
+
+`docs/DESIGN.md` is the source of truth for palette, typography, spacing and components. It is a scraped reference of ChatGPT's own UI — achromatic graphite on white, system font stack with no webfonts, hairline borders instead of shadows, 6/10/16/24 rhythm, one 10px radius. `src/styles/tokens.css` and `src/styles/base.css` implement it; component styles inherit from those and should not invent colours.
+
+Three deliberate deviations, marked in the CSS with the word `ОТСТУПЛЕНИЕ`. Do not "fix" them back:
+
+- **Display sizes above the system's 24px cap** for `h1`/`h2`. The cap exists to keep a chat UI conversational; this is a landing page that has to explain itself at a glance.
+- **A dark theme.** The reference is light-only and defines nothing for dark; the dark tokens are an extension in the same achromatic key.
+- **Section spacing larger than 24px.** That figure is sidebar density; a long scrolling page needs air. Increments stay multiples of 8.
+
+The system forbids chromatic accents, and that holds: the primary action is an inverted ink fill (`--accent` is the ink colour), not a brand hue. The only colour on the page comes from the work screenshots in the showcase.
+
 ## Conventions
 
 - Source comments are in Russian; commit messages are in English with a `feat:` / `fix:` / `content:` / `chore:` / `docs:` prefix.
