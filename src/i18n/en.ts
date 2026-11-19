@@ -24,7 +24,7 @@ export const en: Dict = {
     title: 'A fast, ready-made website for your business — tailored in 3–7 days',
     subtitle: 'I build modern websites together with AI: faster than a site builder, without extra costs.',
     cta: 'I want a site like this',
-    secondary: 'See my work',
+    secondary: 'How it works',
     trust: 'This page makes no third-party requests and sets no cookies.',
     meter: 'Weighs {kb} KB, opened in {s} s, third-party requests: {n}.',
     imageAlt: 'Rita Romanovskaia — portrait',

@@ -12,38 +12,32 @@ const t = getDict(locale).hero;
     <p class="lead">{t.subtitle}</p>
     <div class="actions">
       <a class="btn-primary" href="#contact">{t.cta}</a>
-      <a class="btn-secondary" href="#showcase">{t.secondary}</a>
+      <a class="btn-secondary" href="#process">{t.secondary}</a>
     </div>
+    <p class="meter" data-meter data-template={t.meter}>{t.trust}</p>
   </div>
   <Image class="photo" src={photo} alt={t.imageAlt} widths={[320, 480, 640, 960]}
     sizes="(max-width: 48rem) 20rem, min(30rem, 38vw)" loading="eager" fetchpriority="high" />
-  <p class="meter" data-meter data-template={t.meter}>{t.trust}</p>
 </section>
 <style>
   .hero {
-    display: grid; gap: var(--space-4) var(--space-5); align-items: end;
+    display: grid; gap: var(--space-4) var(--space-5); align-items: center;
     padding-block: clamp(2.5rem, 8vw, 5.5rem) clamp(2rem, 5vw, 3.5rem);
     grid-template-columns: minmax(0, 1.45fr) minmax(0, 1fr);
-    grid-template-areas: 'copy photo' 'meter photo';
   }
-  .copy { grid-area: copy; }
-  .photo { grid-area: photo; width: 100%; border-radius: var(--radius); }
+  .photo { width: 100%; border-radius: var(--radius); }
   .actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2); margin-top: var(--space-3); }
 
   /* Счётчик: числа набраны display-гарнитурой — единственное место, где она попадает в текст. */
   .meter {
-    grid-area: meter; align-self: end;
-    margin: 0; padding-top: var(--space-3);
+    margin: var(--space-5) 0 0; padding-top: var(--space-3);
     border-top: 1px solid var(--rule);
-    font-size: .9375rem; line-height: 1.5; color: var(--muted);
+    font-size: 14px; line-height: 1.43; color: var(--muted);
     min-height: 4.1rem; max-width: 34ch;
   }
-  .meter :global(b) {
-    font-family: var(--font-display); font-weight: 500; font-size: 1.0625rem;
-    color: var(--text); letter-spacing: -0.02em;
-  }
+  .meter :global(b) { font-weight: 600; color: var(--text); }
   @media (max-width: 48rem) {
-    .hero { grid-template-columns: 1fr; grid-template-areas: 'copy' 'photo' 'meter'; align-items: start; }
+    .hero { grid-template-columns: 1fr; align-items: start; }
     .photo { max-width: 20rem; }
     .meter { min-height: 0; }
   }

@@ -1,10 +1,10 @@
 *, *::before, *::after { box-sizing: border-box; }
-html { scroll-padding-top: calc(var(--header-h) + 1rem); -webkit-text-size-adjust: 100%; }
+html { scroll-padding-top: calc(var(--header-h) + 16px); -webkit-text-size-adjust: 100%; }
 body {
   margin: 0;
   background: var(--bg);
   color: var(--text);
-  font: 400 1.0625rem/1.65 var(--font-sans);
+  font: 400 16px/1.5 var(--font-sans);
   overflow-wrap: break-word;
 }
 @media (prefers-reduced-motion: no-preference) {
@@ -13,35 +13,38 @@ body {
 }
 img { max-width: 100%; height: auto; display: block; }
 
-/* Заголовки набраны display-гарнитурой; шкала по Брингхерсту, без разрядки и капса. */
+/*
+ * ОТСТУПЛЕНИЕ: система запрещает текст крупнее 24px — это мерка разговорного
+ * интерфейса. Продающая страница без крупного заголовка не объясняет себя,
+ * поэтому display-ступени оставлены. Вес и ритм — как в системе.
+ */
 h1, h2, h3 {
-  font-family: var(--font-display);
-  margin: 0 0 var(--space-2);
+  font-family: var(--font-sans);
+  margin: 0 0 var(--space-3);
   font-weight: 600;
-  line-height: 1.06;
-  letter-spacing: -0.025em;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
   overflow-wrap: break-word;
 }
-h1 { font-size: clamp(2.125rem, 4.6vw, 3.5rem); line-height: 1.02; text-wrap: balance; }
-h2 { font-size: clamp(1.625rem, 3.2vw, 2.5rem); text-wrap: balance; }
-h3 { font-size: 1.25rem; font-weight: 500; letter-spacing: -0.015em; line-height: 1.25; }
-p { margin: 0 0 var(--space-2); max-width: var(--measure); }
+h1 { font-size: clamp(32px, 4.4vw, 52px); line-height: 1.06; margin-bottom: var(--space-4); text-wrap: balance; }
+h2 { font-size: clamp(24px, 3vw, 34px); text-wrap: balance; }
+h3 { font-size: 18px; line-height: 1.33; letter-spacing: -0.01em; }
+p { margin: 0 0 var(--space-3); max-width: var(--measure); }
 a { color: var(--accent-text); text-underline-offset: .2em; }
-:focus-visible { outline: 3px solid var(--accent-text); outline-offset: 3px; border-radius: 2px; }
+:focus-visible { outline: 3px solid var(--text); outline-offset: 2px; border-radius: 2px; }
 
 .muted { color: var(--muted); }
-/* Мелкий служебный текст — той же гарнитурой, что и всё остальное. */
-.meta { font-size: .9375rem; color: var(--muted); }
-.container { width: min(100% - 2 * var(--gutter), 68rem); margin-inline: auto; }
+.meta { font-size: 14px; line-height: 1.43; color: var(--muted); }
+.container { width: min(100% - 2 * var(--gutter), 1200px); margin-inline: auto; }
 
-/* Линия-позвоночник: тянется вдоль раздела, заголовок садится прямо на неё. */
+/* Волосяная линия — единственный разделитель в системе; здесь она держит и структуру раздела. */
 .section { padding-block: var(--space-6); }
 .section > .container {
   border-left: 1px solid var(--rule);
   padding-left: var(--spine);
 }
 .section > .container > h2 { margin-left: calc(-1 * var(--spine)); }
-.lead { font-size: 1.1875rem; color: var(--muted); max-width: 58ch; }
+.lead { font-size: 18px; line-height: 1.5; color: var(--muted); max-width: 58ch; }
 
 .visually-hidden {
   position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
@@ -49,27 +52,24 @@ a { color: var(--accent-text); text-underline-offset: .2em; }
 }
 .icon-btn {
   display: inline-grid; place-items: center; min-width: 44px; min-height: 44px;
-  border: 1px solid var(--border); border-radius: var(--radius-sm);
-  background: transparent; color: var(--text); cursor: pointer; font: inherit; font-size: .875rem;
+  border: 1px solid var(--border); border-radius: var(--radius);
+  background: transparent; color: var(--text); cursor: pointer; font: inherit; font-size: 14px;
 }
+.icon-btn:hover { background: var(--veil); }
 
-/* Кнопки прямоугольные: основное действие держит цвет, второстепенное — подчёркивание. */
+/* Один радиус на все органы управления, как требует система. */
 .btn-primary, .btn-secondary {
   display: inline-flex; align-items: center; justify-content: center;
-  min-height: 48px; padding: .8rem 1.5rem;
-  font: 500 1rem/1.2 var(--font-sans); text-decoration: none; cursor: pointer;
-  border: 0; border-radius: var(--radius-sm);
+  min-height: 44px; padding: var(--space-2) var(--space-3);
+  font: 500 16px/1.25 var(--font-sans); text-decoration: none; cursor: pointer;
+  border-radius: var(--radius); border: 1px solid transparent;
 }
 .btn-primary { background: var(--accent); color: var(--accent-contrast); }
-.btn-secondary {
-  background: transparent; color: var(--text); padding-inline: 0; margin-inline: var(--space-2);
-  border-radius: 0; border-bottom: 2px solid var(--accent-text);
-}
+.btn-secondary { background: transparent; color: var(--text); border-color: var(--border); }
 @media (prefers-reduced-motion: no-preference) {
-  .btn-primary { transition: background-color .15s ease; }
-  .btn-secondary { transition: border-color .15s ease; }
+  .btn-primary, .btn-secondary { transition: background-color .15s ease, border-color .15s ease; }
 }
-.btn-primary:hover { background: color-mix(in srgb, var(--accent) 86%, var(--text)); }
-.btn-secondary:hover { border-color: var(--text); }
+.btn-primary:hover { background: color-mix(in srgb, var(--accent) 88%, var(--bg)); }
+.btn-secondary:hover { background: var(--veil); border-color: var(--edge); }
 
 .text-link { display: inline-flex; align-items: center; min-height: 44px; font-weight: 500; }
