@@ -62,16 +62,24 @@ Data separate from copy:
 
 ### The mini-apps under `public/works/`
 
-`public/works/<slug>/index.html` are self-contained third-party pages, placed **as-is** and served from the site's own origin at `/works/<slug>/`. Consequences:
+`public/works/<slug>/index.html` are self-contained single-file pages served from the site's own origin at `/works/<slug>/`. They are not built by Astro — `public/` is copied into `dist/` wholesale. Rules that hold for all of them:
 
-- The CSP in `vercel.json` (`default-src 'self'`, `font-src 'self'`) applies to them. They must not reference external URLs — no CDN scripts, no Google Fonts. `tests/e2e/works.spec.ts` asserts this.
-- `public/` is copied into `dist/` wholesale, so a literal `XXX` inside an app breaks `check:launch`.
+- The CSP in `vercel.json` (`default-src 'self'`, `font-src 'self'`) applies. They must not reference external URLs — no CDN scripts, no Google Fonts. `tests/e2e/works.spec.ts` asserts this.
+- A literal `XXX` anywhere inside an app breaks `check:launch`.
 - Their tests check that the page actually *renders* (a per-app selector), not just that it returns 200 — an app whose script dies still serves an empty shell. They also run with `localStorage` throwing, since the landing itself promises these apps work with site data blocked.
-- Permitted edits to them are narrow: strip external references, fix an attribute that breaks rendering or accessibility (`lang`, a malformed doctype), remove vendor metadata. Do not restructure them.
+
+**Two kinds of app, with different editing rules:**
+
+| Slug | Whose | What may be changed |
+|---|---|---|
+| `privychki` | the site owner's own product | anything — it is designed and maintained here |
+| `zapis`, `matematika` | third-party, placed **as-is** | narrow edits only: strip external references, fix an attribute that breaks rendering or accessibility (`lang`, a malformed doctype), remove vendor metadata. Do not restructure them. |
+
+Since these pages bypass Astro's asset pipeline, they cannot import `@fontsource-*`; `font-src 'self'` rules out a CDN. `privychki` therefore loads the subsets copied into `public/fonts/` (Golos Text cyrillic + latin, Unbounded cyrillic) via its own `@font-face`. That copy is the reason those files exist outside `node_modules` — the landing itself still gets its fonts through Astro.
 
 ### Quality gates
 
-`tests/e2e/a11y.spec.ts` asserts zero axe WCAG 2.2 AA violations on a fixed page list in both colour schemes; `lighthouserc.json` asserts ≥0.9 performance and ≥0.95 accessibility / best-practices / SEO on `/` and `/en/`. **`/works/*` is deliberately in neither list** — the vendored apps are not held to the landing's bars.
+`tests/e2e/a11y.spec.ts` asserts zero axe WCAG 2.2 AA violations on a fixed page list in both colour schemes; `lighthouserc.json` asserts ≥0.9 performance and ≥0.95 accessibility / best-practices / SEO on `/` and `/en/`. **`/works/*` is deliberately in neither list** — the vendored apps cannot be held to the landing's bars. `privychki` is ours and does pass axe WCAG 2.2 AA in both schemes, but nothing enforces that yet — it was checked by hand. Adding just that one slug to `a11y.spec.ts`'s list would make it a real gate.
 
 ## Conventions
 

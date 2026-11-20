@@ -4,121 +4,439 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Тренажёр полезных привычек</title>
+<meta name="description" content="Ребёнок отмечает дела за день, получает жетоны и копит их на награду.">
+<meta name="theme-color" content="#DCE6E3" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#15262B" media="(prefers-color-scheme: dark)">
+<link rel="preload" href="/fonts/golos-text-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/unbounded-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
 <style>
-*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#fff8ee;color:#263238}
-.app{max-width:520px;margin:auto;padding:18px}
-.hero{background:linear-gradient(180deg,#fff3c9,#fff9e9);border-radius:28px;padding:18px;text-align:center;box-shadow:0 5px 18px #00000012}
-.hero .pic{font-size:92px;line-height:1;margin-bottom:5px}
-h1{font-size:29px;margin:5px 0 10px;color:#3f4b55}
-.subtitle{font-size:17px;margin-bottom:14px}
-input{width:100%;padding:13px 15px;border:2px solid #ffd36b;border-radius:14px;font-size:17px;background:white}
-.score{margin-top:14px;background:#fff;border-radius:20px;padding:14px}
-.score strong{display:block;font-size:34px;color:#e7a400;margin-top:3px}
-.score small{display:block;font-size:14px;color:#68727a;margin-top:4px}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:15px}
-.day{background:#fff;border-radius:18px;padding:13px;box-shadow:0 3px 12px #00000010}
-.day h2{margin:0 0 9px;font-size:19px}
-.task{display:flex;align-items:flex-start;gap:9px;padding:8px 0;border-top:1px solid #eee;font-size:14px}
-.task input{width:22px;height:22px;margin-top:0}
-.points{font-weight:bold;color:#e7a400;white-space:nowrap}
-.note{font-size:12px;color:#777;margin-top:3px}
-.week{margin-top:16px;background:#fff;border-radius:20px;padding:16px;box-shadow:0 3px 12px #00000010}
-.week h2{margin:0 0 10px}
-button{width:100%;padding:13px;border:0;border-radius:14px;font-size:16px;font-weight:bold;margin-top:9px;cursor:pointer}
-.keep{background:#ffe08a}.reset{background:#eee}.status{font-size:14px;margin-top:10px;text-align:center}
-.total{font-size:22px;font-weight:bold;color:#e7a400}
+/* ——— Шрифты: только со своего домена, иначе CSP (font-src 'self') их не пустит. ——— */
+@font-face{font-family:'Golos Text';src:url('/fonts/golos-text-cyrillic.woff2') format('woff2');font-weight:400 900;font-display:swap;unicode-range:U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116}
+@font-face{font-family:'Golos Text';src:url('/fonts/golos-text-latin.woff2') format('woff2');font-weight:400 900;font-display:swap;unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+2000-206F,U+2122,U+2212}
+/* Дисплейная гарнитура — только для кириллических слов: в этом сабсете нет цифр. */
+@font-face{font-family:'Unbounded';src:url('/fonts/unbounded-cyrillic.woff2') format('woff2');font-weight:400 900;font-display:swap;unicode-range:U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116}
+
+/* ——— Материалы сцены: стена, дерево полки, стекло банки, латунь жетона, бумага наклейки. ——— */
+:root{
+  color-scheme:light;
+  --wall:#DCE6E3;
+  --wall-in:#CBD9D5;
+  --ink:#17302E;
+  --muted:#415854;
+  --shelf:#8C5A3C;
+  --shelf-edge:#6E432B;
+  --glass:rgba(255,255,255,.14);
+  --glass-line:rgba(23,48,46,.3);
+  --glass-deep:rgba(23,48,46,.22);
+  --sheen:rgba(255,255,255,.85);
+  --token:#D9A520;
+  --token-hi:#F5CE57;
+  --token-edge:#9D7010;
+  --slot:#C3D2CE;
+  --slot-line:rgba(23,48,46,.3);
+  --paper:#FFFCF0;
+  --paper-ink:#17302E;
+  --tok:clamp(1.05rem,4.6vw,1.45rem);
+  --jar-w:calc(var(--tok) * 7.6);
+}
+@media (prefers-color-scheme:dark){
+  :root{
+    color-scheme:dark;
+    --wall:#15262B;
+    --wall-in:#0F1D21;
+    --ink:#E9F1EE;
+    --muted:#9FB5B1;
+    --shelf:#5B3A27;
+    --shelf-edge:#3D2518;
+    --glass:rgba(255,255,255,.05);
+    --glass-line:rgba(233,241,238,.32);
+    --glass-deep:rgba(0,0,0,.3);
+    --sheen:rgba(255,255,255,.4);
+    --token:#E0AE2B;
+    --token-hi:#F7D469;
+    --token-edge:#8A6209;
+    --slot:#1E3338;
+    --slot-line:rgba(233,241,238,.34);
+    --paper:#EFE7D2;
+    --paper-ink:#1B2A22;
+  }
+}
+
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;
+  background:var(--wall);
+  color:var(--ink);
+  font:400 1.0625rem/1.55 'Golos Text',system-ui,sans-serif;
+  font-feature-settings:'tnum';
+}
+.app{width:min(100% - 1.75rem,33rem);margin-inline:auto;padding:1.5rem 0 3rem}
+.app > section + section{margin-top:1.75rem}
+h1,h2{margin:0;line-height:1.1;letter-spacing:-.01em}
+p{margin:0}
+:focus-visible{outline:3px solid var(--token-edge);outline-offset:3px;border-radius:4px}
+.visually-hidden{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* ——— Шапка: название отштамповано дисплейной гарнитурой, уточнение — тихое. ——— */
+.masthead h1{font-size:clamp(1.75rem,8vw,2.5rem)}
+.masthead .mark{font-family:'Unbounded','Golos Text',sans-serif;font-weight:700;display:block}
+.masthead .sub{font-weight:500;font-size:clamp(1.0625rem,4.4vw,1.375rem);color:var(--muted);display:block;letter-spacing:0}
+
+/* ——— Сцена: банка-копилка и жетоны этой недели стоят на одной полке. ——— */
+.scene{display:flex;align-items:flex-end;gap:.9rem;margin-top:1.5rem}
+.jar{width:var(--jar-w);flex:none}
+.jar-neck{
+  position:relative;width:58%;height:calc(var(--tok) * .9);margin:0 auto -2px;
+  border:2px solid var(--glass-line);border-bottom:0;
+  background:var(--glass);
+}
+/* Венчик горловины чуть шире самой шейки — по нему банка и узнаётся. */
+.jar-neck::before{
+  content:"";position:absolute;left:-9%;right:-9%;top:-2px;height:calc(var(--tok) * .4);
+  border:2px solid var(--glass-line);border-radius:4px;background:var(--glass);
+}
+.jar-body{
+  position:relative;aspect-ratio:1 / 1.12;overflow:hidden;
+  border:2px solid var(--glass-line);
+  border-radius:8px 8px 22% 22% / 8px 8px 10% 10%;
+  background:var(--glass);
+  box-shadow:0 7px 12px -8px rgba(0,0,0,.45),inset 0 -14px 16px -14px var(--glass-deep);
+}
+/* Блик на стекле — одна полоса, а не градиентная заливка по всей площади. */
+.jar-body::before{
+  content:"";position:absolute;top:6%;left:9%;width:9%;height:66%;z-index:1;
+  border-radius:50%;background:var(--sheen);opacity:.42;
+}
+.jar-label{
+  position:absolute;left:8%;right:8%;top:15%;
+  background:var(--paper);color:var(--paper-ink);
+  border-radius:3px;padding:.4rem .5rem .3rem;
+  box-shadow:0 1px 3px rgba(0,0,0,.2);
+  rotate:-1.2deg;
+  font-size:.75rem;line-height:1.2;
+}
+.jar-label span{display:block;color:color-mix(in srgb,var(--paper-ink) 65%,transparent)}
+.jar-label input{
+  width:100%;border:0;border-bottom:1.5px dotted color-mix(in srgb,var(--paper-ink) 45%,transparent);
+  background:transparent;color:inherit;font:600 .9375rem/1.3 'Golos Text',sans-serif;
+  padding:.1rem 0;min-height:1.5rem;
+}
+.jar-label input::placeholder{color:color-mix(in srgb,var(--paper-ink) 42%,transparent);font-weight:400}
+
+.heap{flex:none;width:calc(var(--tok) * 7.5 + 10px);position:relative;height:calc(var(--tok) * 7.2)}
+.pile{position:absolute;left:7px;right:7px;bottom:7px;height:74%}
+.heap .pile{left:4px;right:4px;bottom:0;height:100%}
+
+/* Жетон: латунь с кантом и штампованным ободком. */
+.tok{
+  position:absolute;width:var(--tok);height:var(--tok);border-radius:50%;
+  background:radial-gradient(circle at 34% 28%,var(--token-hi),var(--token) 56%,var(--token-edge) 100%);
+  box-shadow:0 1px 2px rgba(0,0,0,.22),inset 0 0 0 1px var(--token-edge);
+}
+.tok::after{
+  content:"";position:absolute;inset:21%;border-radius:50%;
+  border:1px solid color-mix(in srgb,var(--token-edge) 60%,transparent);
+}
+.shelf{
+  height:calc(var(--tok) * .62);border-radius:2px 2px 4px 4px;
+  background:linear-gradient(var(--shelf) 55%,var(--shelf-edge));
+  box-shadow:inset 0 1px 0 color-mix(in srgb,#fff 22%,transparent),0 2px 6px -2px rgba(0,0,0,.4);
+}
+
+/* ——— Два показания, каждое под своим предметом. ——— */
+.readout{display:flex;gap:.9rem;margin-top:.7rem}
+.readout > div:first-child{width:var(--jar-w);flex:none}
+.readout b{display:block;font-size:1.75rem;font-weight:900;letter-spacing:-.02em;line-height:1.1}
+.readout span{display:block;font-size:.875rem;color:var(--muted)}
+.carry{margin-top:.2rem;font-size:.8125rem;color:var(--muted)}
+.rule{font-size:.9375rem;color:var(--muted);margin-top:1.1rem}
+
+/* ——— Дни недели: по жетонам видно, где неделя пустая. ——— */
+.days{display:flex;gap:.3rem;margin-bottom:1rem}
+.days button{
+  flex:1;min-width:0;min-height:3.25rem;padding:.35rem .1rem;cursor:pointer;
+  display:grid;gap:.2rem;justify-items:center;align-content:center;
+  border:1.5px solid transparent;border-radius:8px;
+  background:var(--wall-in);color:var(--ink);
+  font:500 .8125rem/1 'Golos Text',sans-serif;
+}
+.days button[aria-pressed="true"]{background:var(--ink);color:var(--wall);border-color:var(--ink)}
+.days button[data-today="1"]{border-color:var(--token-edge)}
+.days .cnt{
+  width:1.15rem;height:1.15rem;border-radius:50%;display:grid;place-items:center;
+  font-size:.6875rem;font-weight:700;
+  background:radial-gradient(circle at 34% 28%,var(--token-hi),var(--token) 60%,var(--token-edge));
+  color:#2A1E04;
+}
+/* Пустой день — пустая ячейка под жетон, а не ноль. */
+.days .cnt[data-zero="1"]{background:none;color:inherit;box-shadow:inset 0 0 0 1.5px color-mix(in srgb,currentColor 55%,transparent);font-size:0}
+
+.today h2{font-size:1.3125rem;font-weight:700}
+.today .hint{font-size:.9375rem;color:var(--muted);margin:.25rem 0 1rem}
+
+/* ——— Дело — это ячейка под жетон: пустая или занятая. ——— */
+.task{display:flex;gap:.75rem;align-items:flex-start;padding:.7rem 0;border-top:1px solid var(--wall-in);cursor:pointer}
+.task:first-child{border-top:0}
+.task input{
+  appearance:none;-webkit-appearance:none;margin:0;flex:none;cursor:pointer;
+  width:1.75rem;height:1.75rem;border-radius:50%;
+  background:var(--slot);box-shadow:inset 0 0 0 1.5px var(--slot-line),inset 0 2px 3px rgba(0,0,0,.14);
+}
+.task input:checked{
+  background:radial-gradient(circle at 34% 28%,var(--token-hi),var(--token) 56%,var(--token-edge) 100%);
+  box-shadow:0 1px 2px rgba(0,0,0,.22),inset 0 0 0 1px var(--token-edge);
+}
+.task .em{flex:none;font-size:1.25rem;line-height:1.35;width:1.6rem;text-align:center}
+.task b{font-weight:500;font-size:1rem;line-height:1.35;display:block}
+.task .note{display:block;font-size:.8125rem;color:var(--muted);margin-top:.15rem}
+
+/* ——— Конец недели. ——— */
+.finish{border-top:1px solid var(--wall-in);padding-top:1.4rem}
+.finish h2{font-size:1.125rem;font-weight:700}
+.finish p{font-size:.9375rem;color:var(--muted);margin:.35rem 0 1rem}
+.act{display:block;width:100%;min-height:3rem;margin-top:.6rem;cursor:pointer;border-radius:10px;font:600 1rem/1.2 'Golos Text',sans-serif}
+.pour{border:0;background:var(--ink);color:var(--wall)}
+.spend{border:1.5px solid var(--slot-line);background:transparent;color:var(--ink)}
+.sure{display:none;align-items:center;gap:.5rem;flex-wrap:wrap;margin-top:.6rem}
+.sure[data-open="1"]{display:flex}
+.sure p{flex:1 1 100%;font-size:.875rem;color:var(--ink);margin:0}
+.sure button{flex:1;min-height:2.75rem;padding:0 .9rem;cursor:pointer;border-radius:8px;font:600 .9375rem 'Golos Text',sans-serif}
+.sure .yes{border:0;background:var(--token);color:#2A1E04}
+.sure .no{border:1.5px solid var(--slot-line);background:transparent;color:var(--ink)}
+.status{margin-top:.9rem;font-size:.9375rem;min-height:1.4rem}
+
+@media (min-width:56rem){
+  :root{--tok:1.7rem}
+  .app{width:min(100% - 3rem,58rem);display:grid;grid-template-columns:1fr 1fr;gap:0 3rem;align-items:start;padding-top:2.5rem}
+  .masthead{grid-column:1 / -1;margin-bottom:.75rem}
+  .bank{grid-column:1;margin-top:0}
+  .today{grid-column:2;grid-row:2 / span 2;margin-top:0}
+  .finish{grid-column:1}
+}
+
+/* Падение жетона — ответ на нажатие, единственное движение в интерфейсе. */
+@media (prefers-reduced-motion:no-preference){
+  .task input{transition:background-color .12s ease}
+  .tok--new{animation:drop .26s cubic-bezier(.3,1.5,.6,1) both}
+  .tok--pour{animation:drop .3s cubic-bezier(.3,1.4,.6,1) both}
+  .days button,.act,.sure button{transition:background-color .15s ease,color .15s ease}
+}
+@keyframes drop{from{transform:translateY(-130%)}to{transform:translateY(0)}}
 </style>
 </head>
 <body>
-<div class="app">
-<section class="hero">
-  <div class="pic" aria-label="школьник">🧒🎒📚</div>
-  <h1>Тренажёр полезных привычек</h1>
-  <div class="subtitle">Привет, чемпион! 😊</div>
-  <input id="name" placeholder="Впиши своё имя">
-  <div class="score">
-    <div>🏆 Баллы, оставшиеся с прошлой недели</div>
-    <strong id="carry">0</strong>
-    <small>Если баллы не обнулили, они переходят сюда и продолжают копиться.</small>
-    <div style="margin-top:10px">🏦 Всего в копилке</div>
-    <strong id="bank">0</strong>
+<main class="app">
+
+<header class="masthead">
+  <h1><span class="mark">Тренажёр</span><span class="sub">полезных привычек</span></h1>
+</header>
+
+<section class="bank">
+  <div class="scene">
+    <div class="jar">
+      <div class="jar-neck"></div>
+      <div class="jar-body">
+        <div class="pile" id="jarPile" aria-hidden="true"></div>
+        <label class="jar-label"><span>чья копилка</span><input id="name" placeholder="впиши имя" autocomplete="off" maxlength="18"></label>
+      </div>
+    </div>
+    <div class="heap"><div class="pile" id="weekPile" aria-hidden="true"></div></div>
   </div>
+  <div class="shelf"></div>
+  <div class="readout">
+    <div>
+      <b id="bank">0</b>
+      <span>баллов в копилке</span>
+      <p class="carry" id="carry"></p>
+    </div>
+    <div>
+      <b id="weekPoints">0</b>
+      <span>за эту неделю, из 490</span>
+    </div>
+  </div>
+  <p class="rule">Одно дело — один жетон. Жетон стоит 10 баллов.</p>
 </section>
 
-<div class="week">
-<h2>📅 Текущая неделя</h2>
-<div id="days"></div>
-<div class="total">Баллы за текущую неделю: <span id="weekPoints">0</span> / 490</div>
-</div>
+<section class="today">
+  <div class="days" id="dayNav" role="group" aria-label="Дни недели"></div>
+  <h2 id="dayTitle">День</h2>
+  <p class="hint" id="dayHint"></p>
+  <div id="days"></div>
+</section>
 
-<div class="week">
-<h2>🎁 Итоги недели</h2>
-<div>Родители подтвердили получение вознаграждения?</div>
-<button class="keep" onclick="finish(true)">🏦 Копить дальше</button>
-<button class="reset" onclick="finish(false)">🔄 Скинуть баллы</button>
-<div class="status" id="status"></div>
-</div>
-</div>
+<section class="finish">
+  <h2>Конец недели</h2>
+  <p>Жетоны со стола можно пересыпать в копилку или обменять с родителями на награду.</p>
+  <button class="act pour" id="pour">Пересыпать в копилку</button>
+  <button class="act spend" id="spend">Обменяли на награду</button>
+  <div class="sure" id="sure">
+    <p>Копилка опустеет: баллы уйдут на награду.</p>
+    <button class="no" id="cancel" type="button">Отмена</button>
+    <button class="yes" id="confirm" type="button">Обменяли</button>
+  </div>
+  <p class="status" id="status" role="status"></p>
+</section>
+
+</main>
 
 <script>
-const tasks=[
-['🧹','Убрал в комнате','Кровать заправлена утром, вещи не валяются после школы, чистый пол и игрушки убраны в конце дня.'],
-['📚','Сам сделал уроки','Без напоминаний сам подошёл к родителям на проверку. Ошибки не мешают получить баллы за самостоятельность.'],
-['🤝','Помог маме или папе по дому',''],
-['📖','Почитал книгу 20–30 минут',''],
-['💯','Получил хорошую отметку в школе',''],
-['🐾','Уход за животными',''],
-['🧠','Самостоятельные дополнительные занятия','Математика, иностранный язык или другой учебный тренажёр.']
+(function(){
+'use strict';
+
+var tasks=[
+ ['🧹','Убрал в комнате','Кровать заправлена утром, вещи не валяются после школы, чистый пол и игрушки убраны в конце дня.'],
+ ['📚','Сам сделал уроки','Без напоминаний сам подошёл к родителям на проверку. Ошибки не мешают получить жетон за самостоятельность.'],
+ ['🤝','Помог маме или папе по дому',''],
+ ['📖','Почитал книгу 20–30 минут',''],
+ ['💯','Получил хорошую отметку в школе',''],
+ ['🐾','Поухаживал за животными',''],
+ ['🧠','Занимался дополнительно сам','Математика, иностранный язык или другой учебный тренажёр.']
 ];
-const days=['Понедельник','Вторник','Среда','Четверг','Пятница','Суббота','Воскресенье'];
-// Хранилище браузера может быть запрещено настройками — тогда баллы просто не сохраняются, но тренажёр работает.
-var LS={get:function(k){try{return localStorage.getItem(k)}catch(e){return null}},set:function(k,v){try{localStorage.setItem(k,v)}catch(e){}}};
-let bank=Number(LS.get('bank')||0);
-let carry=Number(LS.get('carry')||0);
-let week=JSON.parse(LS.get('week')||'[]');
+var dayNames=['Понедельник','Вторник','Среда','Четверг','Пятница','Суббота','Воскресенье'];
+var dayShort=['пн','вт','ср','чт','пт','сб','вс'];
+var PER=10;
 
-document.getElementById('name').value=LS.get('childName')||'';
-document.getElementById('name').addEventListener('input',e=>LS.set('childName',e.target.value));
+// Хранилище браузера может быть запрещено настройками — тогда жетоны просто не сохраняются,
+// но тренажёр работает: любое обращение к localStorage обёрнуто.
+var LS={
+  get:function(k){try{return localStorage.getItem(k)}catch(e){return null}},
+  set:function(k,v){try{localStorage.setItem(k,v)}catch(e){}}
+};
 
-function render(){
- document.getElementById('carry').textContent=carry;
- document.getElementById('bank').textContent=bank;
- let out='';
- for(let d=0;d<7;d++){
-   out+=`<div class="day"><h2>${days[d]}</h2>`;
-   for(let t=0;t<tasks.length;t++){
-     const checked=!!(week[d]&&week[d][t]);
-     out+=`<label class="task"><input type="checkbox" ${checked?'checked':''} onchange="toggle(${d},${t},this.checked)"><span>${tasks[t][0]} <b>${tasks[t][1]}</b><div class="points">+10</div>${tasks[t][2]?`<div class="note">${tasks[t][2]}</div>`:''}</span></label>`;
-   }
-   out+='</div>';
- }
- document.getElementById('days').innerHTML=out;
- document.getElementById('weekPoints').textContent=calcWeek();
+var bank=Number(LS.get('bank'))||0;
+var carry=Number(LS.get('carry'))||0;
+var week=[];
+try{var saved=JSON.parse(LS.get('week')||'[]');if(Array.isArray(saved))week=saved;}catch(e){}
+var today=(new Date().getDay()+6)%7;
+var openDay=today;
+
+var $=function(id){return document.getElementById(id)};
+var nameInput=$('name');
+nameInput.value=LS.get('childName')||'';
+nameInput.addEventListener('input',function(){LS.set('childName',nameInput.value)});
+
+function ticks(d){
+  var row=week[d],n=0,t;
+  if(!row)return 0;
+  for(t=0;t<tasks.length;t++)if(row[t])n++;
+  return n;
 }
-function toggle(d,t,v){
- if(!week[d])week[d]=[];
- week[d][t]=v;
- LS.set('week',JSON.stringify(week));
- render();
+function weekTicks(){var n=0,d;for(d=0;d<7;d++)n+=ticks(d);return n}
+
+/* Жетоны лежат гексагональной кладкой: ряды снизу вверх, нечётные со сдвигом. */
+function paintPile(el,count,cols,rows,mark){
+  var out=[],r,c,odd,n,html='',i,cls;
+  for(r=0;r<rows&&out.length<count;r++){
+    odd=r%2===1;n=odd?cols-1:cols;
+    for(c=0;c<n&&out.length<count;c++)out.push([(odd?0.5:0)+c,r*0.82]);
+  }
+  for(i=0;i<out.length;i++){
+    cls='tok';
+    if(mark==='last'&&i===out.length-1)cls+=' tok--new';
+    if(mark==='pour')cls+=' tok--pour';
+    html+='<i class="'+cls+'" style="left:calc(var(--tok)*'+out[i][0]+');bottom:calc(var(--tok)*'+out[i][1].toFixed(2)+')'+
+          (mark==='pour'?';animation-delay:'+(i*14)+'ms':'')+'"></i>';
+  }
+  el.innerHTML=html;
 }
-function calcWeek(){
- let n=0; for(let d=0;d<7;d++)for(let t=0;t<tasks.length;t++)if(week[d]&&week[d][t])n+=10;
- return n;
+
+function dayHint(){
+  var n=ticks(openDay);
+  $('dayHint').textContent=n?n+' из 7 дел отмечено, это '+n*PER+' баллов':'Ни одного дела пока не отмечено';
 }
-function finish(keep){
- const earned=calcWeek();
- if(keep){bank+=earned;carry=earned;}
- else{bank=0;carry=0;}
- LS.set('bank',bank);
- LS.set('carry',carry);
- week=[];
- LS.set('week','[]');
- document.getElementById('status').textContent=keep
- ? `🎉 ${earned} баллов добавлено в копилку!`
- : '🔄 Баллы обнулены. Новая неделя начинается с 0.';
- render();
+
+function renderBank(pour){
+  $('bank').textContent=bank;
+  $('carry').textContent=carry>0?'из них '+carry+' — за прошлую неделю':'';
+  paintPile($('jarPile'),Math.round(bank/PER),6,6,pour?'pour':null);
 }
-render();
+
+function renderWeek(justChecked){
+  var n=weekTicks();
+  $('weekPoints').textContent=n*PER;
+  paintPile($('weekPile'),n,7,8,justChecked?'last':null);
+}
+
+function renderNav(){
+  var html='',d,n;
+  for(d=0;d<7;d++){
+    n=ticks(d);
+    html+='<button type="button" data-day="'+d+'" data-today="'+(d===today?1:0)+'" aria-pressed="'+(d===openDay)+'"'+
+          (d===today?' aria-current="date"':'')+'>'+dayShort[d]+
+          '<span class="cnt" data-zero="'+(n?0:1)+'" aria-hidden="true">'+n+'</span>'+
+          '<span class="visually-hidden">'+dayNames[d]+', жетонов: '+n+'</span></button>';
+  }
+  $('dayNav').innerHTML=html;
+}
+
+function renderDay(){
+  $('dayTitle').textContent=dayNames[openDay]+(openDay===today?', сегодня':'');
+  dayHint();
+  var html='',t,on;
+  for(t=0;t<tasks.length;t++){
+    on=!!(week[openDay]&&week[openDay][t]);
+    html+='<label class="task"><input type="checkbox" data-task="'+t+'"'+(on?' checked':'')+'>'+
+          '<span class="em" aria-hidden="true">'+tasks[t][0]+'</span><div><b>'+tasks[t][1]+'</b>'+
+          (tasks[t][2]?'<span class="note">'+tasks[t][2]+'</span>':'')+'</div></label>';
+  }
+  $('days').innerHTML=html;
+}
+
+function render(pour){renderBank(pour);renderWeek(false);renderNav();renderDay()}
+
+$('dayNav').addEventListener('click',function(e){
+  var b=e.target.closest?e.target.closest('button[data-day]'):null;
+  if(!b)return;
+  openDay=Number(b.getAttribute('data-day'));
+  renderNav();renderDay();
+});
+
+$('days').addEventListener('change',function(e){
+  var box=e.target,t;
+  if(!box.getAttribute||box.getAttribute('data-task')===null)return;
+  t=Number(box.getAttribute('data-task'));
+  if(!week[openDay])week[openDay]=[];
+  week[openDay][t]=box.checked;
+  LS.set('week',JSON.stringify(week));
+  renderWeek(box.checked);
+  renderNav();
+  dayHint();
+});
+
+function clearWeek(){week=[];LS.set('week','[]')}
+
+$('pour').addEventListener('click',function(){
+  var earned=weekTicks()*PER;
+  if(!earned){$('status').textContent='Пересыпать пока нечего: за эту неделю ни одного жетона.';return}
+  bank+=earned;carry=earned;
+  LS.set('bank',bank);LS.set('carry',carry);
+  clearWeek();
+  $('sure').removeAttribute('data-open');
+  $('status').textContent='Пересыпали '+earned+' баллов. В копилке теперь '+bank+'.';
+  render(true);
+});
+
+$('spend').addEventListener('click',function(){
+  $('sure').setAttribute('data-open','1');
+  $('confirm').focus();
+});
+$('cancel').addEventListener('click',function(){
+  $('sure').removeAttribute('data-open');
+  $('spend').focus();
+});
+$('confirm').addEventListener('click',function(){
+  bank=0;carry=0;
+  LS.set('bank',0);LS.set('carry',0);
+  clearWeek();
+  $('sure').removeAttribute('data-open');
+  $('status').textContent='Копилка пуста: баллы ушли на награду. Новая неделя начинается с нуля.';
+  render(false);
+  $('spend').focus();
+});
+
+render(false);
+})();
 </script>
 </body>
 </html>
