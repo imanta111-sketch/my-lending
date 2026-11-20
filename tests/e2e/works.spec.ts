@@ -1,11 +1,13 @@
 import { test, expect } from '@playwright/test';
 import { readFileSync } from 'node:fs';
 
-const slugs = ['privychki', 'zapis', 'matematika'] as const;
+const slugs = ['privychki', 'privychki-v1', 'zapis', 'matematika'] as const;
 
 /** Что должно появиться на странице, если приложение действительно ожило, а не просто отдалось. */
 const alive: Record<(typeof slugs)[number], string> = {
   privychki: '#days input[type="checkbox"]',
+  // Первая версия тренажёра: лежит по прямой ссылке, в витрину не выведена.
+  'privychki-v1': '#days input[type="checkbox"]',
   zapis: '#app h2',
   matematika: '#app button',
 };

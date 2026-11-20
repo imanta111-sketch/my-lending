@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Тренажёр полезных привычек — первая версия</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#fff8ee;color:#263238}
+.app{max-width:520px;margin:auto;padding:18px}
+.hero{background:linear-gradient(180deg,#fff3c9,#fff9e9);border-radius:28px;padding:18px;text-align:center;box-shadow:0 5px 18px #00000012}
+.hero .pic{font-size:92px;line-height:1;margin-bottom:5px}
+h1{font-size:29px;margin:5px 0 10px;color:#3f4b55}
+.subtitle{font-size:17px;margin-bottom:14px}
+input{width:100%;padding:13px 15px;border:2px solid #ffd36b;border-radius:14px;font-size:17px;background:white}
+.score{margin-top:14px;background:#fff;border-radius:20px;padding:14px}
+.score strong{display:block;font-size:34px;color:#e7a400;margin-top:3px}
+.score small{display:block;font-size:14px;color:#68727a;margin-top:4px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:15px}
+.day{background:#fff;border-radius:18px;padding:13px;box-shadow:0 3px 12px #00000010}
+.day h2{margin:0 0 9px;font-size:19px}
+.task{display:flex;align-items:flex-start;gap:9px;padding:8px 0;border-top:1px solid #eee;font-size:14px}
+.task input{width:22px;height:22px;margin-top:0}
+.points{font-weight:bold;color:#e7a400;white-space:nowrap}
+.note{font-size:12px;color:#777;margin-top:3px}
+.week{margin-top:16px;background:#fff;border-radius:20px;padding:16px;box-shadow:0 3px 12px #00000010}
+.week h2{margin:0 0 10px}
+button{width:100%;padding:13px;border:0;border-radius:14px;font-size:16px;font-weight:bold;margin-top:9px;cursor:pointer}
+.keep{background:#ffe08a}.reset{background:#eee}.status{font-size:14px;margin-top:10px;text-align:center}
+.total{font-size:22px;font-weight:bold;color:#e7a400}
+</style>
+</head>
+<body>
+<div class="app">
+<section class="hero">
+  <div class="pic" aria-label="школьник">🧒🎒📚</div>
+  <h1>Тренажёр полезных привычек</h1>
+  <div class="subtitle">Привет, чемпион! 😊</div>
+  <input id="name" placeholder="Впиши своё имя">
+  <div class="score">
+    <div>🏆 Баллы, оставшиеся с прошлой недели</div>
+    <strong id="carry">0</strong>
+    <small>Если баллы не обнулили, они переходят сюда и продолжают копиться.</small>
+    <div style="margin-top:10px">🏦 Всего в копилке</div>
+    <strong id="bank">0</strong>
+  </div>
+</section>
+
+<div class="week">
+<h2>📅 Текущая неделя</h2>
+<div id="days"></div>
+<div class="total">Баллы за текущую неделю: <span id="weekPoints">0</span> / 490</div>
+</div>
+
+<div class="week">
+<h2>🎁 Итоги недели</h2>
+<div>Родители подтвердили получение вознаграждения?</div>
+<button class="keep" onclick="finish(true)">🏦 Копить дальше</button>
+<button class="reset" onclick="finish(false)">🔄 Скинуть баллы</button>
+<div class="status" id="status"></div>
+</div>
+</div>
+
+<script>
+const tasks=[
+['🧹','Убрал в комнате','Кровать заправлена утром, вещи не валяются после школы, чистый пол и игрушки убраны в конце дня.'],
+['📚','Сам сделал уроки','Без напоминаний сам подошёл к родителям на проверку. Ошибки не мешают получить баллы за самостоятельность.'],
+['🤝','Помог маме или папе по дому',''],
+['📖','Почитал книгу 20–30 минут',''],
+['💯','Получил хорошую отметку в школе',''],
+['🐾','Уход за животными',''],
+['🧠','Самостоятельные дополнительные занятия','Математика, иностранный язык или другой учебный тренажёр.']
+];
+const days=['Понедельник','Вторник','Среда','Четверг','Пятница','Суббота','Воскресенье'];
+// Хранилище браузера может быть запрещено настройками — тогда баллы просто не сохраняются, но тренажёр работает.
+var LS={get:function(k){try{return localStorage.getItem(k)}catch(e){return null}},set:function(k,v){try{localStorage.setItem(k,v)}catch(e){}}};
+let bank=Number(LS.get('bank')||0);
+let carry=Number(LS.get('carry')||0);
+let week=JSON.parse(LS.get('week')||'[]');
+
+document.getElementById('name').value=LS.get('childName')||'';
+document.getElementById('name').addEventListener('input',e=>LS.set('childName',e.target.value));
+
+function render(){
+ document.getElementById('carry').textContent=carry;
+ document.getElementById('bank').textContent=bank;
+ let out='';
+ for(let d=0;d<7;d++){
+   out+=`<div class="day"><h2>${days[d]}</h2>`;
+   for(let t=0;t<tasks.length;t++){
+     const checked=!!(week[d]&&week[d][t]);
+     out+=`<label class="task"><input type="checkbox" ${checked?'checked':''} onchange="toggle(${d},${t},this.checked)"><span>${tasks[t][0]} <b>${tasks[t][1]}</b><div class="points">+10</div>${tasks[t][2]?`<div class="note">${tasks[t][2]}</div>`:''}</span></label>`;
+   }
+   out+='</div>';
+ }
+ document.getElementById('days').innerHTML=out;
+ document.getElementById('weekPoints').textContent=calcWeek();
+}
+function toggle(d,t,v){
+ if(!week[d])week[d]=[];
+ week[d][t]=v;
+ LS.set('week',JSON.stringify(week));
+ render();
+}
+function calcWeek(){
+ let n=0; for(let d=0;d<7;d++)for(let t=0;t<tasks.length;t++)if(week[d]&&week[d][t])n+=10;
+ return n;
+}
+function finish(keep){
+ const earned=calcWeek();
+ if(keep){bank+=earned;carry=earned;}
+ else{bank=0;carry=0;}
+ LS.set('bank',bank);
+ LS.set('carry',carry);
+ week=[];
+ LS.set('week','[]');
+ document.getElementById('status').textContent=keep
+ ? `🎉 ${earned} баллов добавлено в копилку!`
+ : '🔄 Баллы обнулены. Новая неделя начинается с 0.';
+ render();
+}
+render();
+</script>
+</body>
+</html>
