@@ -73,7 +73,7 @@ Data separate from copy:
 | Slug | Whose | What may be changed |
 |---|---|---|
 | `privychki` | the site owner's own product | anything — it is designed and maintained here |
-| `privychki-v1` | frozen first version of the same product | nothing. It is kept only so the earlier design stays openable at `/works/privychki-v1/`; it carries `noindex` and is deliberately **not** in `src/data/works.ts`, so no showcase card points at it. Changes belong in `privychki`. |
+| `privychki-v1` | the first version of the same product, kept as a record | only what the owner asks for, and nothing that would make it a second product under maintenance. It exists so the earlier design stays openable at `/works/privychki-v1/`; it carries `noindex` and is deliberately **not** in `src/data/works.ts`, so no showcase card points at it. New work goes into `privychki`. |
 | `zapis`, `matematika` | third-party, placed **as-is** | narrow edits only: strip external references, fix an attribute that breaks rendering or accessibility (`lang`, a malformed doctype), remove vendor metadata. Do not restructure them. |
 
 Since these pages bypass Astro's asset pipeline, they cannot import `@fontsource-*`; `font-src 'self'` rules out a CDN. `privychki` therefore loads the subsets copied into `public/fonts/` (Golos Text cyrillic + latin, Unbounded cyrillic) via its own `@font-face`. That copy is the reason those files exist outside `node_modules` — the landing itself still gets its fonts through Astro.

@@ -9,7 +9,7 @@
 *{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#fff8ee;color:#263238}
 .app{max-width:520px;margin:auto;padding:18px}
 .hero{background:linear-gradient(180deg,#fff3c9,#fff9e9);border-radius:28px;padding:18px;text-align:center;box-shadow:0 5px 18px #00000012}
-.hero .pic{font-size:92px;line-height:1;margin-bottom:5px}
+.hero .pic{font-size:clamp(56px,20vw,92px);line-height:1;margin-bottom:5px}
 h1{font-size:29px;margin:5px 0 10px;color:#3f4b55}
 .subtitle{font-size:17px;margin-bottom:14px}
 input{width:100%;padding:13px 15px;border:2px solid #ffd36b;border-radius:14px;font-size:17px;background:white}
@@ -33,7 +33,7 @@ button{width:100%;padding:13px;border:0;border-radius:14px;font-size:16px;font-w
 <body>
 <div class="app">
 <section class="hero">
-  <div class="pic" aria-label="школьник">🧒🎒📚</div>
+  <div class="pic" aria-label="весёлый ребёнок с шариком и хлопушкой">🧒🎉🎈</div>
   <h1>Тренажёр полезных привычек</h1>
   <div class="subtitle">Привет, чемпион! 😊</div>
   <input id="name" placeholder="Впиши своё имя">
