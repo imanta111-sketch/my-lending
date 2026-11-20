@@ -9,7 +9,8 @@
 *{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#fff8ee;color:#263238}
 .app{max-width:520px;margin:auto;padding:18px}
 .hero{background:linear-gradient(180deg,#fff3c9,#fff9e9);border-radius:28px;padding:18px;text-align:center;box-shadow:0 5px 18px #00000012}
-.hero .pic{display:block;width:clamp(170px,56%,230px);height:auto;margin:0 auto 8px}
+/* multiply убирает белый фон картинки: она ложится прямо на жёлтую шапку, без белого прямоугольника. */
+.hero .pic{display:block;width:clamp(130px,42%,180px);height:auto;margin:0 auto 6px;mix-blend-mode:multiply}
 h1{font-size:29px;margin:5px 0 10px;color:#3f4b55}
 .subtitle{font-size:17px;margin-bottom:14px}
 input{width:100%;padding:13px 15px;border:2px solid #ffd36b;border-radius:14px;font-size:17px;background:white}
@@ -33,34 +34,7 @@ button{width:100%;padding:13px;border:0;border-radius:14px;font-size:16px;font-w
 <body>
 <div class="app">
 <section class="hero">
-  <!-- Картинка нарисована вектором прямо здесь: внешние файлы запрещены политикой безопасности сайта. -->
-  <svg class="pic" viewBox="0 0 200 200" role="img" aria-label="Улыбающийся ребёнок машет рукой на голубом фоне">
-    <rect width="200" height="200" rx="28" fill="#86C9EC"/>
-    <circle cx="100" cy="96" r="70" fill="#A6DBF5"/>
-    <circle cx="36" cy="36" r="14" fill="#FFFFFF" opacity=".5"/>
-    <circle cx="52" cy="41" r="9" fill="#FFFFFF" opacity=".5"/>
-    <circle cx="166" cy="158" r="11" fill="#FFFFFF" opacity=".35"/>
-    <!-- ноги -->
-    <path d="M91 138 89 172M109 138 111 172" stroke="#43618F" stroke-width="15" stroke-linecap="round"/>
-    <ellipse cx="85" cy="178" rx="13" ry="8" fill="#F4F7F9"/>
-    <ellipse cx="115" cy="178" rx="13" ry="8" fill="#F4F7F9"/>
-    <!-- шея -->
-    <rect x="93" y="76" width="14" height="18" rx="5" fill="#F0BE93"/>
-    <!-- туловище -->
-    <rect x="75" y="86" width="50" height="56" rx="17" fill="#F3A738"/>
-    <!-- руки: одна поднята в приветствии, другая опущена -->
-    <path d="M81 101 56 75M119 101 130 139" stroke="#F3A738" stroke-width="14" stroke-linecap="round"/>
-    <circle cx="53" cy="72" r="9" fill="#F7C9A3"/>
-    <circle cx="132" cy="143" r="9" fill="#F7C9A3"/>
-    <!-- голова -->
-    <circle cx="100" cy="58" r="28" fill="#F7C9A3"/>
-    <path d="M72 58a28 28 0 0 1 56 0c0-6-3-9-7-11-4 3-10 4-18 3-7-1-12-3-16-6-9 3-15 8-15 14z" fill="#8A5A33"/>
-    <circle cx="90" cy="58" r="3.4" fill="#3F3027"/>
-    <circle cx="110" cy="58" r="3.4" fill="#3F3027"/>
-    <circle cx="82" cy="67" r="5" fill="#F09A8C" opacity=".5"/>
-    <circle cx="118" cy="67" r="5" fill="#F09A8C" opacity=".5"/>
-    <path d="M92 68c3 5 13 5 16 0" fill="none" stroke="#3F3027" stroke-width="3.2" stroke-linecap="round"/>
-  </svg>
+  <img class="pic" src="rebenok.jpg" width="736" height="1104" alt="Улыбающийся мальчик с рюкзаком показывает большой палец">
   <h1>Тренажёр полезных привычек</h1>
   <div class="subtitle">Привет, чемпион! 😊</div>
   <input id="name" placeholder="Впиши своё имя">
